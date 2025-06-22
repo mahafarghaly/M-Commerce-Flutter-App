@@ -13,6 +13,8 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
+    const String currentFlavor = String.fromEnvironment('FLAVOR');
+    print("currentFlavor:: $currentFlavor");
     return ScreenUtilInit(
         designSize: const Size(360, 690),
         minTextAdapt: false,child: App());
