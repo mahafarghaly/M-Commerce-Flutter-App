@@ -1,5 +1,6 @@
 import 'package:store_app/core/utils/theme/app_color_scheme.dart';
 import 'package:store_app/core/utils/theme/bottom_nav_bar_theme.dart';
+import 'package:store_app/core/utils/theme/icon_theme.dart';
 import 'package:store_app/core/utils/theme/input_decoration_theme.dart';
 
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ extension AppThemeData on AppTheme {
         // appBarTheme: appBarThemeData,
         bottomNavigationBarTheme: bottomNavBarTheme,
          inputDecorationTheme: inputDecorationThemeData,
+        iconTheme: iconThemeData
         // textButtonTheme: textButtonThemeData,
       );
   }

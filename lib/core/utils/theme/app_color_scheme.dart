@@ -13,7 +13,7 @@ extension AppColorScheme on AppTheme {
   brightness: Brightness.light,
     primary:  Color(0xff000000),
     onPrimary:  Color(0xffFFFFFF),
-    secondary: Color(0xff53E88B),
+    secondary: Color(0xff67C4A7),//53E88B
     onSecondary: Color(0xFFFFFFFF),
     error: Color(0xFFBA1A1A),
     onError: Color(0xffFF4545),

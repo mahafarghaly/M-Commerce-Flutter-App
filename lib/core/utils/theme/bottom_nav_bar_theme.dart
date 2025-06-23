@@ -10,7 +10,7 @@ extension AppBottomNavBarTheme on AppTheme{
       backgroundColor:  const Color(0xFFFFFFFF),
 
       selectedIconTheme:IconThemeData(
-          color: colorScheme.primary
+          color: colorScheme.secondary
       ),
       showSelectedLabels: false,
       showUnselectedLabels: false,

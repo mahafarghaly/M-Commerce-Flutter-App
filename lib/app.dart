@@ -1,7 +1,10 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:store_app/core/extenstions/context_extenstion.dart';
 import 'package:store_app/core/utils/theme/app_theme_data.dart';
+import 'package:store_app/features/home/presentation/view/screens/home_screen.dart';
 
 import 'core/utils/theme/app_theme.dart';
 
@@ -14,34 +17,54 @@ class App extends StatefulWidget {
 
 int _currentIndex = 0;
 List<Widget> screens = [
-  Container(color: Colors.red),
+  HomeScreen(),
   Container(color: Colors.yellow),
-  Container(color: Colors.green),
   Container(color: Colors.blue),
 ];
 
 class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+      ),
+    );
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light.themeData,
       darkTheme: AppTheme.dark.themeData,
       home: Scaffold(
         body: screens[_currentIndex],
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _currentIndex,
-          onTap: (value) {
-            setState(() {
-              _currentIndex = value;
-            });
-          },
-          items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home,), label: "Home"),
-            BottomNavigationBarItem(icon: Icon(Icons.favorite,), label: "Favorite"),
-            BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: "Cart"),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: "profile"),
-          ],
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Container(
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            decoration: BoxDecoration(
+         boxShadow: [
+           BoxShadow(
+             color: context.colorScheme.primary.withOpacity(0.1),
+             blurRadius: 8,
+             offset: Offset(0, 4),
+           ),
+         ],
+              borderRadius: BorderRadius.circular(16.r)
+            ),
+            child: BottomNavigationBar(
+              currentIndex: _currentIndex,
+              onTap: (value) {
+                setState(() {
+                  _currentIndex = value;
+                });
+              },
+              items: [
+                BottomNavigationBarItem(icon: Icon(Icons.home_outlined,), label: "Home"),
+                BottomNavigationBarItem(icon: Icon(Icons.category_outlined,), label: "Categories"),
+                BottomNavigationBarItem(icon: Icon(Icons.person_2_outlined), label: "profile"),
+              ],
+            ),
+          ),
         ),
       ),
     );
