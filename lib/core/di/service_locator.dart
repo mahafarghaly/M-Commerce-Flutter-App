@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:store_app/features/home/domain/repository/home_repository_impl.dart';
 
 import '../../features/home/data/datasource/home_api_service.dart';
 import '../../features/home/data/repository/home_repostory.dart';
@@ -14,5 +15,5 @@ Future<void> initServiceLocator() async {
   sl.registerLazySingleton<HomeApiService>(
           () => HomeApiService(sl<Dio>()));
 
-  sl.registerLazySingleton<HomeRepository>(() => HomeRepository(sl()));
+  sl.registerLazySingleton<HomeRepository>(() => HomeRepositoryImpl(sl()));
 }

@@ -16,7 +16,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    testData();
     return SafeArea(
       child: CustomScrollView(
         slivers: [
@@ -55,11 +54,4 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
- Future<void> testData()async {
-  print("test data ====");
-  Dio dio=  await DioFactory.getDio();
-  HomeApiService homeApiService=HomeApiService(dio);
-  HomeRepository homeRepository =HomeRepository(homeApiService);
- await homeRepository.getBrands();
- }
 

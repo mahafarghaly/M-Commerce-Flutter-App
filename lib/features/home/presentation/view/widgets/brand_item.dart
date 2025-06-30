@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store_app/core/extenstions/context_extenstion.dart';
-import '../../../data/models/brands/brand_model.dart';
+import '../../../domain/entity/brand.dart';
 
 class BrandItem extends StatelessWidget {
-  final BrandModel brand;
+  final Brand brand;
   const BrandItem({super.key, required this.brand});
 
   @override
@@ -20,7 +20,7 @@ class BrandItem extends StatelessWidget {
           ),
 
       ),
-      child: Image.network(brand.brandImage!.src!,fit: BoxFit.fill),
+      child: Image.network(brand.imageUrl!,fit: BoxFit.fill),
     );
   }
 }
