@@ -1,15 +1,22 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:store_app/core/networking/api_result.dart';
+import 'package:store_app/features/home/data/datasource/home_api_service.dart';
+import 'package:store_app/features/home/data/repository/home_repostory.dart';
 import 'package:store_app/features/home/presentation/view/widgets/banner_display.dart';
 import 'package:store_app/features/home/presentation/view/widgets/brand_item.dart';
 import 'package:store_app/features/home/presentation/view/widgets/brands_list.dart';
 import 'package:store_app/features/home/presentation/view/widgets/custom_appbar.dart';
+
+import '../../../../../core/networking/dio_factory.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    testData();
     return SafeArea(
       child: CustomScrollView(
         slivers: [
@@ -48,3 +55,11 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+ Future<void> testData()async {
+  print("test data ====");
+  Dio dio=  await DioFactory.getDio();
+  HomeApiService homeApiService=HomeApiService(dio);
+  HomeRepository homeRepository =HomeRepository(homeApiService);
+ await homeRepository.getBrands();
+ }
+

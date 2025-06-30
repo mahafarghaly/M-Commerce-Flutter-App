@@ -1,17 +1,18 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'brand.g.dart';
+part 'brand_model.g.dart';
 
 @JsonSerializable()
-class Brand{
+class BrandModel{
   final int? id;
   final String? title;
   @JsonKey(name:"body_html")
   final String? bodyHtml;
+  @JsonKey(name: 'image')
+final BrandImage? brandImage;
+  BrandModel({this.id, this.title, this.bodyHtml,this.brandImage});
 
-  Brand({this.id, this.title, this.bodyHtml});
-
-  factory Brand.fromJson(Map<String, dynamic> json) => _$BrandFromJson(json);
+  factory BrandModel.fromJson(Map<String, dynamic> json) => _$BrandModelFromJson(json);
 }
 
 @JsonSerializable()

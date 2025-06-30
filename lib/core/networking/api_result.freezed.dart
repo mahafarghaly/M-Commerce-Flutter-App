@@ -46,7 +46,7 @@ $ApiResultCopyWith(ApiResult<T> _, $Res Function(ApiResult<T>) __);
 
 
 class Success<T> implements ApiResult<T> {
-   Success(this.data);
+  const Success(this.data);
   
 
  final  T data;
@@ -112,7 +112,7 @@ as T,
 
 
 class Failure<T> implements ApiResult<T> {
-   Failure(this.message);
+  const Failure(this.message);
   
 
  final  String message;
