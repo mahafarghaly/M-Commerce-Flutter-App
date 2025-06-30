@@ -6,21 +6,43 @@ import '../../../domain/entity/brand.dart';
 
 class BrandItem extends StatelessWidget {
   final Brand brand;
+
   const BrandItem({super.key, required this.brand});
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return Container(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16.r),
-          border: Border.all(
-            color: context.colorScheme.primary.withOpacity(0.1),
-            width: 2.0,
+        borderRadius: BorderRadius.circular(20.r),
+        color: context.colorScheme.onPrimary,
+        border: Border.all(
+          color: context.colorScheme.primary.withOpacity(0.1),
+          width: 2.0,
+        ),
+      ),
+      child: Column(
+        children: [
+          Expanded(
+            child: Image.network(
+              brand.imageUrl!,
+              fit: BoxFit.fill,
+              width: double.infinity,
+              height: double.infinity,
+            ),
           ),
 
+          Padding(
+            padding: EdgeInsets.only(top: 5.h, bottom: 10.h),
+            child: Text(
+              brand.title ?? "",
+              style: context.textTheme.titleSmall?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
       ),
-      child: Image.network(brand.imageUrl!,fit: BoxFit.fill),
     );
   }
 }

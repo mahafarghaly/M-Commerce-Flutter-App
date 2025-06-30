@@ -33,7 +33,7 @@ class BrandsList extends ConsumerWidget {
                   crossAxisCount: 2,
                   crossAxisSpacing: 20,
                   mainAxisSpacing: 20,
-                  childAspectRatio: 3 / 2.1,
+                  childAspectRatio: 3 / 2.3,
                 ),
               ),
             );
