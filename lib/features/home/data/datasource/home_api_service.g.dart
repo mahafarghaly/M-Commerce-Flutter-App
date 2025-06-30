@@ -9,10 +9,7 @@ part of 'home_api_service.dart';
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations
 
 class _HomeApiService implements HomeApiService {
-  _HomeApiService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??=
-        'https://106ef29b5ab2d72aa0243decb0774101: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@mad44-alex-ios-team3.myshopify.com/admin/api/2024-04/';
-  }
+  _HomeApiService(this._dio, {this.baseUrl, this.errorLogger});
 
   final Dio _dio;
 
