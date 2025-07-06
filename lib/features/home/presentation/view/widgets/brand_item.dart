@@ -15,7 +15,7 @@ class BrandItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
 onTap: (){
-  AppNavigation.navigationTo(context, BrandProductsScreen());
+  AppNavigation.navigationTo(context, BrandProductsScreen(brantName: brand.title!,));
 },
       child: Container(
         clipBehavior: Clip.antiAliasWithSaveLayer,

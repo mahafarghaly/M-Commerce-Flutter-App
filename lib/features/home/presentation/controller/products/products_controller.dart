@@ -6,13 +6,14 @@ import '../../../domain/entity/product.dart';
 part 'products_controller.g.dart';
 @riverpod
 class ProductsController extends _$ProductsController{
-  Future<ApiResult<List<ProductEntity>>> fetchByVendor(String? vendor) async {
+  @override
+  Future<ApiResult<List<ProductEntity>>> build(String? vendor) async {
     final useCase= sl<GetProductsUseCase>();
     return await useCase.call(vendor);
   }
-
-  @override
-  Future<List<ProductEntity>> build() async {
-    return [];
-  }
+  //
+  // @override
+  // Future<List<ProductEntity>> build() async {
+  //   return [];
+  // }
 }

@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store_app/core/extenstions/context_extenstion.dart';
 import 'package:store_app/core/utils/app_assets.dart';
+import 'package:store_app/features/home/domain/entity/product.dart';
 
 class ProductItem extends StatelessWidget {
-  const ProductItem({super.key});
-
+  const ProductItem({super.key, required this.product});
+final ProductEntity product;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,7 +21,6 @@ class ProductItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Expanded(
-            flex: 3,
             child: Container(
               clipBehavior: Clip.antiAliasWithSaveLayer,
               width: double.infinity,
@@ -31,22 +31,20 @@ class ProductItem extends StatelessWidget {
                   bottomEnd: Radius.circular(20.r),
                 ),
               ),
-              child: Image.asset(AppAssets.testImage, fit: BoxFit.fill),
+              child: Image.network(product.images[0].src, fit: BoxFit.fill,height: 100,width: 100,),
             ),
           ),
           SizedBox(height: 5.h),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.0.w),
-              child: Text(
-                "Adidas",
-                style: context.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-                textAlign: TextAlign.center,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8.0.w),
+            child: Text(
+              product.title.split('|').last.trim(),
+              style: context.textTheme.titleSmall?.copyWith(
+                fontWeight: FontWeight.bold,
               ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+              textAlign: TextAlign.center,
             ),
           ),
           Padding(
@@ -61,7 +59,7 @@ class ProductItem extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    "500 EG",
+                    "${product.variants[0].price} EG",
                     style: context.textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),

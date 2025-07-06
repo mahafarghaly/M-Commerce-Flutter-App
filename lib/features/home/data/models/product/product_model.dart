@@ -11,6 +11,7 @@ class ProductModel {
   final String? productType;
   final List<Variants>? variants;
   final List<Options>? options;
+  @JsonKey(name: "images")
   final List<ProductImages>? productImages;
 
   const ProductModel({

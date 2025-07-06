@@ -21,7 +21,7 @@ ProductModel _$ProductModelFromJson(Map<String, dynamic> json) => ProductModel(
           ?.map((e) => Options.fromJson(e as Map<String, dynamic>))
           .toList(),
   productImages:
-      (json['productImages'] as List<dynamic>?)
+      (json['images'] as List<dynamic>?)
           ?.map((e) => ProductImages.fromJson(e as Map<String, dynamic>))
           .toList(),
 );
@@ -35,7 +35,7 @@ Map<String, dynamic> _$ProductModelToJson(ProductModel instance) =>
       'product_type': instance.productType,
       'variants': instance.variants,
       'options': instance.options,
-      'productImages': instance.productImages,
+      'images': instance.productImages,
     };
 
 Variants _$VariantsFromJson(Map<String, dynamic> json) => Variants(
