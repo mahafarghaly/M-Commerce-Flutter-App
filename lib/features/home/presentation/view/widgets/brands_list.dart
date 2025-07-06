@@ -3,14 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store_app/features/home/presentation/view/widgets/brand_item.dart';
 import '../../../../../core/networking/api_result.dart';
-import '../../controller/home_provider.dart';
-
+import '../../controller/brands/brands_controller.dart';
 class BrandsList extends ConsumerWidget {
   const BrandsList({super.key});
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final brandsAsync = ref.watch(brandProvider);
+    final brandsAsync = ref.watch(brandsControllerProvider);
     return brandsAsync.when(
       error: (e, s) => SliverToBoxAdapter(child: Text("Error: $e")),
       loading:

@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:store_app/features/home/domain/repository/home_repository_impl.dart';
+import 'package:store_app/features/home/domain/usecases/brands_usecase.dart';
+import 'package:store_app/features/home/domain/usecases/products_usecase.dart';
 
 import '../../features/home/data/datasource/home_api_service.dart';
 import '../../features/home/data/repository/home_repostory.dart';
@@ -14,7 +16,11 @@ Future<void> initServiceLocator() async {
   sl.registerLazySingleton<Dio>(() => dio);
 
   sl.registerLazySingleton<HomeApiService>(
-          () => HomeApiService(sl<Dio>(),baseUrl: ApiConstants.baseUrl));
+    () => HomeApiService(sl<Dio>(), baseUrl: ApiConstants.baseUrl),
+  );
 
   sl.registerLazySingleton<HomeRepository>(() => HomeRepositoryImpl(sl()));
+  //use cases
+  sl.registerLazySingleton<GetBrandsUseCase>(() => GetBrandsUseCase(sl()));
+  sl.registerLazySingleton<GetProductsUseCase>(() => GetProductsUseCase(sl()));
 }

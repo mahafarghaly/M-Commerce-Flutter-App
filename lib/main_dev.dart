@@ -5,22 +5,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store_app/core/di/service_locator.dart';
 import 'app.dart';
 
-
-
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load();
   await initServiceLocator();
-  print("API KEY = ${dotenv.env['API_KEY']}");
   runApp(ProviderScope(child: const MyApp()));
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-        designSize: const Size(360, 690),
-        minTextAdapt: false,child: App());
-
+      designSize: const Size(360, 690),
+      minTextAdapt: false,
+      child: App(),
+    );
   }
 }
