@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,9 +15,12 @@ class BrandItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-onTap: (){
-  AppNavigation.navigationTo(context, BrandProductsScreen(brantName: brand.title!,));
-},
+      onTap: () {
+        AppNavigation.navigationTo(
+          context,
+          BrandProductsScreen(brantName: brand.title!),
+        );
+      },
       child: Container(
         clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
@@ -30,12 +34,26 @@ onTap: (){
         child: Column(
           children: [
             Expanded(
-              child: Image.network(
-                brand.imageUrl!,
+              child: CachedNetworkImage(
+                imageUrl: brand.imageUrl!,
                 fit: BoxFit.fill,
-                width: double.infinity,
                 height: double.infinity,
+                width: double.infinity,
+                progressIndicatorBuilder:
+                    (context, url, downloadProgress) => Center(
+                      child: CircularProgressIndicator(
+                        value: downloadProgress.progress,
+                        color: context.colorScheme.secondary,
+                      ),
+                    ),
+                errorWidget: (context, url, error) => Icon(Icons.error),
               ),
+              // Image.network(
+              //   brand.imageUrl!,
+              //   fit: BoxFit.fill,
+              //   width: double.infinity,
+              //   height: double.infinity,
+              // ),
             ),
 
             Padding(

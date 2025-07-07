@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:store_app/core/networking/api_result.dart';
-import 'package:store_app/features/base/presentation/view/widgets/product_item.dart';
+import 'package:store_app/features/home/presentation/view/widgets/product_item.dart';
 import 'package:store_app/features/home/presentation/controller/products/products_controller.dart';
 
 class ProductsList extends ConsumerWidget {

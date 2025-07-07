@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store_app/core/extenstions/context_extenstion.dart';
@@ -6,7 +7,9 @@ import 'package:store_app/features/home/domain/entity/product.dart';
 
 class ProductItem extends StatelessWidget {
   const ProductItem({super.key, required this.product});
-final ProductEntity product;
+
+  final ProductEntity product;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,13 +28,25 @@ final ProductEntity product;
               clipBehavior: Clip.antiAliasWithSaveLayer,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Colors.red,
                 borderRadius: BorderRadiusDirectional.only(
                   bottomStart: Radius.circular(20.r),
                   bottomEnd: Radius.circular(20.r),
                 ),
               ),
-              child: Image.network(product.images[0].src, fit: BoxFit.fill,height: 100,width: 100,),
+              child: CachedNetworkImage(
+                imageUrl: product.images[0].src,
+                fit: BoxFit.fill,
+                height: 100,
+                width: 100,
+                progressIndicatorBuilder:
+                    (context, url, downloadProgress) => Center(
+                      child: CircularProgressIndicator(
+                        value: downloadProgress.progress,
+                        color: context.colorScheme.secondary,
+                      ),
+                    ),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+              ),
             ),
           ),
           SizedBox(height: 5.h),
