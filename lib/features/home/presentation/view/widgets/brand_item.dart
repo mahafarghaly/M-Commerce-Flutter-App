@@ -48,12 +48,6 @@ class BrandItem extends StatelessWidget {
                     ),
                 errorWidget: (context, url, error) => Icon(Icons.error),
               ),
-              // Image.network(
-              //   brand.imageUrl!,
-              //   fit: BoxFit.fill,
-              //   width: double.infinity,
-              //   height: double.infinity,
-              // ),
             ),
 
             Padding(
