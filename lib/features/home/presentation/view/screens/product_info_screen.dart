@@ -4,9 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store_app/core/extenstions/context_extenstion.dart';
 import 'package:store_app/core/extenstions/widget_extenstion.dart';
 import 'package:store_app/features/home/presentation/view/widgets/custom_cursor_Image.dart';
+import 'package:store_app/features/home/presentation/view/widgets/product_colors_list.dart';
 import 'package:store_app/features/home/presentation/view/widgets/product_size_list.dart';
-import 'package:store_app/features/home/presentation/view/widgets/size_segmented.dart';
-
 import '../../../domain/entity/product.dart';
 
 class ProductInfoScreen extends StatelessWidget {
@@ -16,6 +15,13 @@ class ProductInfoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sizeOption = product.options.firstWhere((opt) => opt.name == "Size");
+    final colorOption = product.options.firstWhere(
+      (opt) => opt.name == "Color",
+    );
+
+    final showInRow =
+        sizeOption.values.length <= 4 && colorOption.values.length <= 4;
     return Scaffold(
       backgroundColor: context.colorScheme.onPrimary,
       appBar: AppBar(
@@ -63,7 +69,34 @@ class ProductInfoScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                ProductSizeList(options: product.options),
+                Text(
+                  "Available Sizes and Colors",
+                  style: context.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: context.colorScheme.primary.withOpacity(0.5),
+                    fontSize: 22,
+                  ),
+                ).paddingVertical(10.h),
+                showInRow
+                    ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: ProductSizeList(options: product.options),
+                        ),
+                        Expanded(
+                          child: ProductColorsList(options: product.options),
+                        ),
+                      ],
+                    )
+                    : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ProductSizeList(options: product.options),
+                        SizedBox(height: 10.h),
+                        ProductColorsList(options: product.options),
+                      ],
+                    ),
               ],
             ),
           ),
