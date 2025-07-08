@@ -30,77 +30,93 @@ class ProductInfoScreen extends StatelessWidget {
           IconButton(onPressed: () {}, icon: Icon(Icons.favorite_outline)),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          CustomCursorImage(images: product.images),
-          SizedBox(height: 16.h),
-          Padding(
-            padding: EdgeInsets.all(20.0.r),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  product.title.split("|").last.trim(),
-                  style: context.textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CustomCursorImage(images: product.images),
+            SizedBox(height: 16.h),
+            Padding(
+              padding: EdgeInsets.all(20.0.r),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    product.title.split("|").last.trim(),
+                    style: context.textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                SizedBox(height: 10.h),
-                Row(
-                  children: [
-                    Text(
-                      "${product.variants[0].price} EG",
-                      style: context.textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
+                  SizedBox(height: 10.h),
+                  Row(
+                    children: [
+                      Text(
+                        "${product.variants[0].price} EG",
+                        style: context.textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    const Spacer(),
-                    RatingBarIndicator(
-                      rating: 3.5,
-                      itemBuilder:
-                          (context, index) => Icon(
-                            Icons.star,
-                            color: context.colorScheme.onTertiaryContainer,
-                          ),
-                      itemCount: 5,
-                      itemSize: 30.0,
-                      direction: Axis.horizontal,
-                    ),
-                  ],
-                ),
-                Text(
-                  "Available Sizes and Colors",
-                  style: context.textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: context.colorScheme.primary.withOpacity(0.5),
-                    fontSize: 22,
+                      const Spacer(),
+                      RatingBarIndicator(
+                        rating: 3.5,
+                        itemBuilder:
+                            (context, index) => Icon(
+                              Icons.star,
+                              color: context.colorScheme.onTertiaryContainer,
+                            ),
+                        itemCount: 5,
+                        itemSize: 30.0,
+                        direction: Axis.horizontal,
+                      ),
+                    ],
                   ),
-                ).paddingVertical(10.h),
-                showInRow
-                    ? Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: ProductSizeList(options: product.options),
-                        ),
-                        Expanded(
-                          child: ProductColorsList(options: product.options),
-                        ),
-                      ],
-                    )
-                    : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ProductSizeList(options: product.options),
-                        SizedBox(height: 10.h),
-                        ProductColorsList(options: product.options),
-                      ],
+                  Text(
+                    "Available Sizes and Colors",
+                    style: context.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: context.colorScheme.primary.withOpacity(0.5),
+                      fontSize: 20.sp,
                     ),
-              ],
+                  ).paddingVertical(10.h),
+                  showInRow
+                      ? Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: ProductSizeList(options: product.options),
+                          ),
+                          Expanded(
+                            child: ProductColorsList(options: product.options),
+                          ),
+                        ],
+                      )
+                      : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ProductSizeList(options: product.options),
+                          SizedBox(height: 10.h),
+                          ProductColorsList(options: product.options),
+                        ],
+                      ),
+                  Text(
+                    "Details",
+                    style: context.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: context.colorScheme.primary.withOpacity(0.5),
+                      fontSize: 20.sp,
+                    ),
+                  ).paddingTop(10.h),
+                  Text(
+                    product.description,
+                    style: context.textTheme.bodyLarge?.copyWith(
+                      fontSize: 16.sp,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
