@@ -1,17 +1,8 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:store_app/core/networking/api_result.dart';
-import 'package:store_app/features/home/presentation/view/widgets/product_item.dart';
-import 'package:store_app/features/home/data/datasource/home_api_service.dart';
-import 'package:store_app/features/home/data/repository/home_repostory.dart';
 import 'package:store_app/features/home/presentation/view/widgets/banner_display.dart';
-import 'package:store_app/features/home/presentation/view/widgets/brand_item.dart';
 import 'package:store_app/features/home/presentation/view/widgets/brands_list.dart';
 import 'package:store_app/features/home/presentation/view/widgets/custom_appbar.dart';
-
-import '../../../../../core/networking/dio_factory.dart';
-
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
