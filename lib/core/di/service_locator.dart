@@ -1,5 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:store_app/features/auth/data/datasource/auth_api_service.dart';
+import 'package:store_app/features/auth/data/repository/auth_repository.dart';
+import 'package:store_app/features/auth/domain/repository/auth_repository_impl.dart';
+import 'package:store_app/features/auth/domain/usecases/add_customer_usecase.dart';
+import 'package:store_app/features/auth/domain/usecases/get_customers_usecase.dart';
 import 'package:store_app/features/home/domain/repository/home_repository_impl.dart';
 import 'package:store_app/features/home/domain/usecases/brands_usecase.dart';
 import 'package:store_app/features/home/domain/usecases/products_usecase.dart';
@@ -18,9 +23,15 @@ Future<void> initServiceLocator() async {
   sl.registerLazySingleton<HomeApiService>(
     () => HomeApiService(sl<Dio>(), baseUrl: ApiConstants.baseUrl),
   );
+  sl.registerLazySingleton<AuthApiService>(
+        () => AuthApiService(sl<Dio>(), baseUrl: ApiConstants.baseUrl),
+  );
 
   sl.registerLazySingleton<HomeRepository>(() => HomeRepositoryImpl(sl()));
+  sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(sl()));
   //use cases
   sl.registerLazySingleton<GetBrandsUseCase>(() => GetBrandsUseCase(sl()));
   sl.registerLazySingleton<GetProductsUseCase>(() => GetProductsUseCase(sl()));
+  sl.registerLazySingleton<GetCustomersUseCase>(() => GetCustomersUseCase(sl()));
+  sl.registerLazySingleton<AddCustomerUseCase>(() => AddCustomerUseCase(sl()));
 }
