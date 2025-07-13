@@ -1,6 +1,6 @@
 import 'package:store_app/core/networking/api_result.dart';
 import 'package:store_app/features/auth/data/datasource/auth_api_service.dart';
-import 'package:store_app/features/auth/data/datasource/mappers/customer_model_mapper.dart';
+import 'package:store_app/features/auth/data/mappers/customer_model_mapper.dart';
 import 'package:store_app/features/auth/data/models/customer_request.dart';
 import 'package:store_app/features/auth/data/repository/auth_repository.dart';
 import 'package:store_app/features/auth/domain/entities/customer.dart';

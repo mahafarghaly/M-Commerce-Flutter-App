@@ -1,6 +1,6 @@
 import 'package:store_app/features/home/data/datasource/home_api_service.dart';
-import 'package:store_app/features/home/data/models/mappers/brand_mapper.dart';
-import 'package:store_app/features/home/data/models/mappers/product_model_mapper.dart';
+import 'package:store_app/features/home/data/mappers/brand_mapper.dart';
+import 'package:store_app/features/home/data/mappers/product_model_mapper.dart';
 import 'package:store_app/features/home/data/repository/home_repostory.dart';
 import 'package:store_app/features/home/domain/entity/product.dart';
 import '../../../../core/networking/api_error_handler.dart';

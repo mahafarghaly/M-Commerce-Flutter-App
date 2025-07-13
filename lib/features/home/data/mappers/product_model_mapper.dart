@@ -1,5 +1,5 @@
-import '../../../domain/entity/product.dart';
-import '../product/product_model.dart';
+import '../../domain/entity/product.dart';
+import '../models/product/product_model.dart';
 
 extension ProductModelMapper on ProductModel {
   ProductEntity toEntity() {

@@ -1,5 +1,5 @@
-import '../../../domain/entity/brand.dart';
-import '../brands/brand_model.dart';
+import '../../domain/entity/brand.dart';
+import '../models/brands/brand_model.dart';
 
 extension BrandMapper on BrandModel {
   Brand toEntity() {
