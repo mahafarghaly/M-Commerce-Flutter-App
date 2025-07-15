@@ -22,7 +22,7 @@ class AuthRepositoryImpl extends AuthRepository {
       );
     } catch (error) {
       final apiError = parseApiError(error);
-      return ApiResult.failure(apiError.errors);
+      return ApiResult.failure(apiError.errorMessage);
     }
   }
 
@@ -35,10 +35,12 @@ class AuthRepositoryImpl extends AuthRepository {
     try {
       final model = CustomerModel(email: email, password: password, note: note);
       final request = CustomerRequest(customer: model);
-      return ApiResult.success(request.customer.toEntity());
+      final response = await _authApiService.addCustomer(request);
+      final addedCustomer = response.customer.toEntity();
+      return ApiResult.success(addedCustomer);
     } catch (error) {
       final apiError = parseApiError(error);
-      return ApiResult.failure(apiError.errors);
+      return ApiResult.failure(apiError.errorMessage);
     }
   }
 }

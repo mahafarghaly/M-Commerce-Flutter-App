@@ -28,7 +28,7 @@ extension AppTextTheme on AppTheme{
             fontWeight: FontWeight.w400,
             color: colorScheme.onSurface),
         titleSmall: TextStyle(
-            fontSize: 17.sp,
+            fontSize: 18.sp,
             fontWeight: FontWeight.w400,
             color: colorScheme.onSurface),
         bodyLarge: TextStyle(
@@ -59,10 +59,5 @@ extension AppTextTheme on AppTheme{
           fontFamily: "BentonSans Book",
           color: colorScheme.onSurface),
     );
-
-
-
-
-
   }
 }

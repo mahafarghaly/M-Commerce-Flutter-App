@@ -18,5 +18,5 @@ abstract class AuthApiService {
   Future<CustomerResponse> getCustomers();
 
   @POST("customers.json")
-  Future<CustomerResponse> addCustomer(@Body() CustomerRequest request);
+  Future<CustomerRequest> addCustomer(@Body() CustomerRequest request);
 }

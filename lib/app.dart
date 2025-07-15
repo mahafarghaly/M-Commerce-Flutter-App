@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,39 +30,43 @@ class _AppState extends State<App> {
         statusBarIconBrightness: Brightness.dark,
       ),
     );
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.light.themeData,
-      darkTheme: AppTheme.dark.themeData,
-      home: Scaffold(
-        body: screens[_currentIndex],
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Container(
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            decoration: BoxDecoration(
-         boxShadow: [
-           BoxShadow(
-             color: context.colorScheme.primary.withOpacity(0.1),
-             blurRadius: 8,
-             offset: Offset(0, 4),
-           ),
-         ],
-              borderRadius: BorderRadius.circular(16.r)
-            ),
-            child: BottomNavigationBar(
-              currentIndex: _currentIndex,
-              onTap: (value) {
-                setState(() {
-                  _currentIndex = value;
-                });
-              },
-              items: [
-                BottomNavigationBarItem(icon: Icon(Icons.home_outlined,), label: "Home"),
-                BottomNavigationBarItem(icon: Icon(Icons.category_outlined,), label: "Categories"),
-                BottomNavigationBarItem(icon: Icon(Icons.person_2_outlined), label: "profile"),
-              ],
-            ),
+    return Scaffold(
+      body: screens[_currentIndex],
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Container(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: context.colorScheme.primary.withOpacity(0.1),
+                blurRadius: 8,
+                offset: Offset(0, 4),
+              ),
+            ],
+            borderRadius: BorderRadius.circular(16.r),
+          ),
+          child: BottomNavigationBar(
+            currentIndex: _currentIndex,
+            onTap: (value) {
+              setState(() {
+                _currentIndex = value;
+              });
+            },
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home_outlined),
+                label: "Home",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.category_outlined),
+                label: "Categories",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person_2_outlined),
+                label: "profile",
+              ),
+            ],
           ),
         ),
       ),

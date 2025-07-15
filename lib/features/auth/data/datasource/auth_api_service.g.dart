@@ -45,13 +45,13 @@ class _AuthApiService implements AuthApiService {
   }
 
   @override
-  Future<CustomerResponse> addCustomer(CustomerRequest request) async {
+  Future<CustomerRequest> addCustomer(CustomerRequest request) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(request.toJson());
-    final _options = _setStreamType<CustomerResponse>(
+    final _options = _setStreamType<CustomerRequest>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -62,9 +62,9 @@ class _AuthApiService implements AuthApiService {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late CustomerResponse _value;
+    late CustomerRequest _value;
     try {
-      _value = CustomerResponse.fromJson(_result.data!);
+      _value = CustomerRequest.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
