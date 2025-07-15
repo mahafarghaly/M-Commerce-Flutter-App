@@ -7,7 +7,7 @@ on:
       - main
 
 jobs:
- distribute_to_firebase:
+  distribute_to_firebase:
     name: Build and Distribute
     runs-on: ubuntu-latest
 
@@ -19,6 +19,12 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: stable
+
+      - name: Create .env file from GitHub Secrets
+        run: |
+          echo "API_KEY=${{ secrets.API_KEY }}" >> .env
+          echo "API_PASSWORD=${{ secrets.API_PASSWORD }}" >> .env
+          echo "HOSTNAME=${{ secrets.HOSTNAME }}" >> .env
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
