@@ -6,6 +6,7 @@ import 'package:store_app/core/utils/theme/app_theme_data.dart';
 import 'package:store_app/features/home/presentation/view/screens/home_screen.dart';
 
 import 'core/utils/theme/app_theme.dart';
+import 'features/categories/presentation/view/screens/categories_screen.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -16,8 +17,8 @@ class App extends StatefulWidget {
 
 int _currentIndex = 0;
 List<Widget> screens = [
-  HomeScreen(),
-  Container(color: Colors.yellow),
+ const HomeScreen(),
+  const CategoriesScreen(),
   Container(color: Colors.blue),
 ];
 

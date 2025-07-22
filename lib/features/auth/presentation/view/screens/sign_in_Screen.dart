@@ -91,7 +91,7 @@ class SignInScreen extends ConsumerWidget with BaseView{
                       final result =
                           await ref
                               .read(authControllerProvider.notifier)
-                              .signIn();
+                              .getCustomers();
 
                       switch (result) {
                         case Success(:final data):

@@ -7,13 +7,8 @@ part 'products_controller.g.dart';
 @riverpod
 class ProductsController extends _$ProductsController{
   @override
-  Future<ApiResult<List<ProductEntity>>> build(String? vendor) async {
+  Future<ApiResult<List<ProductEntity>>> build({String? vendor}) async {
     final useCase= sl<GetProductsUseCase>();
-    return await useCase.call(vendor);
+    return await useCase.call(vendor: vendor);
   }
-  //
-  // @override
-  // Future<List<ProductEntity>> build() async {
-  //   return [];
-  // }
 }

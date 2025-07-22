@@ -4,7 +4,7 @@ class ProductEntity{
   final String description;
   final String vendor;
   final String productType;
-  final List<VariantEntity> variants;
+  final List<VariantEntity>? variants;
   final List<OptionEntity> options;
   final List<ProductImageEntity> images;
 

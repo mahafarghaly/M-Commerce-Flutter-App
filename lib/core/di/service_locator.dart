@@ -5,6 +5,11 @@ import 'package:store_app/features/auth/data/repository/auth_repository.dart';
 import 'package:store_app/features/auth/domain/repository/auth_repository_impl.dart';
 import 'package:store_app/features/auth/domain/usecases/add_customer_usecase.dart';
 import 'package:store_app/features/auth/domain/usecases/get_customers_usecase.dart';
+import 'package:store_app/features/categories/data/datasource/categories_api_servise.dart';
+import 'package:store_app/features/categories/data/repository/categories_repository.dart';
+import 'package:store_app/features/categories/domain/repository/categories_repository_impl.dart';
+import 'package:store_app/features/categories/domain/usecases/get_categories_usecase.dart';
+import 'package:store_app/features/categories/domain/usecases/get_category_products.dart';
 import 'package:store_app/features/home/domain/repository/home_repository_impl.dart';
 import 'package:store_app/features/home/domain/usecases/brands_usecase.dart';
 import 'package:store_app/features/home/domain/usecases/products_usecase.dart';
@@ -26,12 +31,19 @@ Future<void> initServiceLocator() async {
   sl.registerLazySingleton<AuthApiService>(
         () => AuthApiService(sl<Dio>(), baseUrl: ApiConstants.baseUrl),
   );
-
+  sl.registerLazySingleton<CategoriesApiService>(
+        () => CategoriesApiService(sl<Dio>(), baseUrl: ApiConstants.baseUrl),
+  );
+  //repository
   sl.registerLazySingleton<HomeRepository>(() => HomeRepositoryImpl(sl()));
   sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(sl()));
+  sl.registerLazySingleton<CategoriesRepository>(() => CategoriesRepositoryImpl(sl()));
   //use cases
   sl.registerLazySingleton<GetBrandsUseCase>(() => GetBrandsUseCase(sl()));
   sl.registerLazySingleton<GetProductsUseCase>(() => GetProductsUseCase(sl()));
   sl.registerLazySingleton<GetCustomersUseCase>(() => GetCustomersUseCase(sl()));
   sl.registerLazySingleton<AddCustomerUseCase>(() => AddCustomerUseCase(sl()));
+  sl.registerLazySingleton<GetCategoriesUseCase>(() => GetCategoriesUseCase(sl()));
+  sl.registerLazySingleton<GetCategoryProductsUseCase>(() => GetCategoryProductsUseCase(sl()));
+
 }

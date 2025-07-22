@@ -6,7 +6,7 @@ part of 'brands_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$brandsControllerHash() => r'8e3233573075b49b2ddec5c3376f579efbdc065c';
+String _$brandsControllerHash() => r'20930508ff4dd30b2f697402e6cd4b1ae8c2df8d';
 
 /// See also [BrandsController].
 @ProviderFor(BrandsController)

@@ -1,29 +1,31 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'auth_controller.dart';
+part of 'categories_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$authControllerHash() => r'95c88da35339f9ad4815cc5421308562e0154456';
+String _$categoriesControllerHash() =>
+    r'3c217b9935c84b9300e8b77f2116a5f9043123d1';
 
-/// See also [AuthController].
-@ProviderFor(AuthController)
-final authControllerProvider = AutoDisposeAsyncNotifierProvider<
-  AuthController,
-  ApiResult<Customer>?
+/// See also [CategoriesController].
+@ProviderFor(CategoriesController)
+final categoriesControllerProvider = AutoDisposeAsyncNotifierProvider<
+  CategoriesController,
+  ApiResult<List<CategoryEntity>>
 >.internal(
-  AuthController.new,
-  name: r'authControllerProvider',
+  CategoriesController.new,
+  name: r'categoriesControllerProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product')
           ? null
-          : _$authControllerHash,
+          : _$categoriesControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$AuthController = AutoDisposeAsyncNotifier<ApiResult<Customer>?>;
+typedef _$CategoriesController =
+    AutoDisposeAsyncNotifier<ApiResult<List<CategoryEntity>>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'products_controller.dart';
+part of 'category_products_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$productsControllerHash() =>
-    r'de4b1355410a37783edb411f868ff4f8a359c103';
+String _$categoryProductsControllerHash() =>
+    r'b19eae8e1b34afbe96edbff6a4ce65a869d9c590';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -30,33 +30,33 @@ class _SystemHash {
   }
 }
 
-abstract class _$ProductsController
+abstract class _$CategoryProductsController
     extends BuildlessAutoDisposeAsyncNotifier<ApiResult<List<ProductEntity>>> {
-  late final String? vendor;
+  late final int id;
 
-  FutureOr<ApiResult<List<ProductEntity>>> build({String? vendor});
+  FutureOr<ApiResult<List<ProductEntity>>> build(int id);
 }
 
-/// See also [ProductsController].
-@ProviderFor(ProductsController)
-const productsControllerProvider = ProductsControllerFamily();
+/// See also [CategoryProductsController].
+@ProviderFor(CategoryProductsController)
+const categoryProductsControllerProvider = CategoryProductsControllerFamily();
 
-/// See also [ProductsController].
-class ProductsControllerFamily
+/// See also [CategoryProductsController].
+class CategoryProductsControllerFamily
     extends Family<AsyncValue<ApiResult<List<ProductEntity>>>> {
-  /// See also [ProductsController].
-  const ProductsControllerFamily();
+  /// See also [CategoryProductsController].
+  const CategoryProductsControllerFamily();
 
-  /// See also [ProductsController].
-  ProductsControllerProvider call({String? vendor}) {
-    return ProductsControllerProvider(vendor: vendor);
+  /// See also [CategoryProductsController].
+  CategoryProductsControllerProvider call(int id) {
+    return CategoryProductsControllerProvider(id);
   }
 
   @override
-  ProductsControllerProvider getProviderOverride(
-    covariant ProductsControllerProvider provider,
+  CategoryProductsControllerProvider getProviderOverride(
+    covariant CategoryProductsControllerProvider provider,
   ) {
-    return call(vendor: provider.vendor);
+    return call(provider.id);
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -71,85 +71,85 @@ class ProductsControllerFamily
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'productsControllerProvider';
+  String? get name => r'categoryProductsControllerProvider';
 }
 
-/// See also [ProductsController].
-class ProductsControllerProvider
+/// See also [CategoryProductsController].
+class CategoryProductsControllerProvider
     extends
         AutoDisposeAsyncNotifierProviderImpl<
-          ProductsController,
+          CategoryProductsController,
           ApiResult<List<ProductEntity>>
         > {
-  /// See also [ProductsController].
-  ProductsControllerProvider({String? vendor})
+  /// See also [CategoryProductsController].
+  CategoryProductsControllerProvider(int id)
     : this._internal(
-        () => ProductsController()..vendor = vendor,
-        from: productsControllerProvider,
-        name: r'productsControllerProvider',
+        () => CategoryProductsController()..id = id,
+        from: categoryProductsControllerProvider,
+        name: r'categoryProductsControllerProvider',
         debugGetCreateSourceHash:
             const bool.fromEnvironment('dart.vm.product')
                 ? null
-                : _$productsControllerHash,
-        dependencies: ProductsControllerFamily._dependencies,
+                : _$categoryProductsControllerHash,
+        dependencies: CategoryProductsControllerFamily._dependencies,
         allTransitiveDependencies:
-            ProductsControllerFamily._allTransitiveDependencies,
-        vendor: vendor,
+            CategoryProductsControllerFamily._allTransitiveDependencies,
+        id: id,
       );
 
-  ProductsControllerProvider._internal(
+  CategoryProductsControllerProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.vendor,
+    required this.id,
   }) : super.internal();
 
-  final String? vendor;
+  final int id;
 
   @override
   FutureOr<ApiResult<List<ProductEntity>>> runNotifierBuild(
-    covariant ProductsController notifier,
+    covariant CategoryProductsController notifier,
   ) {
-    return notifier.build(vendor: vendor);
+    return notifier.build(id);
   }
 
   @override
-  Override overrideWith(ProductsController Function() create) {
+  Override overrideWith(CategoryProductsController Function() create) {
     return ProviderOverride(
       origin: this,
-      override: ProductsControllerProvider._internal(
-        () => create()..vendor = vendor,
+      override: CategoryProductsControllerProvider._internal(
+        () => create()..id = id,
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        vendor: vendor,
+        id: id,
       ),
     );
   }
 
   @override
   AutoDisposeAsyncNotifierProviderElement<
-    ProductsController,
+    CategoryProductsController,
     ApiResult<List<ProductEntity>>
   >
   createElement() {
-    return _ProductsControllerProviderElement(this);
+    return _CategoryProductsControllerProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is ProductsControllerProvider && other.vendor == vendor;
+    return other is CategoryProductsControllerProvider && other.id == id;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, vendor.hashCode);
+    hash = _SystemHash.combine(hash, id.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -157,23 +157,23 @@ class ProductsControllerProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin ProductsControllerRef
+mixin CategoryProductsControllerRef
     on AutoDisposeAsyncNotifierProviderRef<ApiResult<List<ProductEntity>>> {
-  /// The parameter `vendor` of this provider.
-  String? get vendor;
+  /// The parameter `id` of this provider.
+  int get id;
 }
 
-class _ProductsControllerProviderElement
+class _CategoryProductsControllerProviderElement
     extends
         AutoDisposeAsyncNotifierProviderElement<
-          ProductsController,
+          CategoryProductsController,
           ApiResult<List<ProductEntity>>
         >
-    with ProductsControllerRef {
-  _ProductsControllerProviderElement(super.provider);
+    with CategoryProductsControllerRef {
+  _CategoryProductsControllerProviderElement(super.provider);
 
   @override
-  String? get vendor => (origin as ProductsControllerProvider).vendor;
+  int get id => (origin as CategoryProductsControllerProvider).id;
 }
 
 // ignore_for_file: type=lint

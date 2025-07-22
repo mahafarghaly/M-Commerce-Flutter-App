@@ -53,7 +53,7 @@ class ProductInfoScreen extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              "${product.variants[0].price} EG",
+                            "${product.variants?[0].price} EG",
                               style: context.textTheme.titleSmall?.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),

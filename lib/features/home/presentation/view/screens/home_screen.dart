@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store_app/features/home/presentation/view/widgets/banner_display.dart';
 import 'package:store_app/features/home/presentation/view/widgets/brands_list.dart';
-import 'package:store_app/features/home/presentation/view/widgets/custom_appbar.dart';
+import 'package:store_app/features/base/presentation/view/widgets/custom_appbar.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 

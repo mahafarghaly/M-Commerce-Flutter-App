@@ -62,9 +62,10 @@ class ProductItem extends StatelessWidget {
                 product.title.split('|').last.trim(),
                 style: context.textTheme.titleSmall?.copyWith(
                   fontWeight: FontWeight.bold,
+                  fontSize: 16.sp
                 ),
                 overflow: TextOverflow.ellipsis,
-                maxLines: 2,
+                maxLines: 1,
                 textAlign: TextAlign.center,
               ),
             ),
@@ -80,7 +81,7 @@ class ProductItem extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      "${product.variants[0].price} EG",
+                      "${(product.variants?.isNotEmpty ?? false) ? product.variants![0].price : 0} EG",
                       style: context.textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),

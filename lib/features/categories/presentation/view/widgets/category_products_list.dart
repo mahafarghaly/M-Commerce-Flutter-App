@@ -1,23 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:store_app/core/networking/api_result.dart';
-import 'package:store_app/features/home/presentation/view/widgets/product_item.dart';
-import 'package:store_app/features/home/presentation/controller/products/products_controller.dart';
+import 'package:store_app/features/categories/presentation/controller/categories_controller.dart';
+import 'package:store_app/features/categories/presentation/controller/category_products_controller.dart';
 
-class ProductsList extends ConsumerWidget {
-  const ProductsList({super.key, required this.vendor});
+import '../../../../../core/di/injection_container.dart';
+import '../../../../../core/networking/api_result.dart';
+import '../../../../home/presentation/view/widgets/product_item.dart';
 
-  final String vendor;
+class CategoryProductsList extends ConsumerWidget {
+  const CategoryProductsList({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final productsAsync = ref.watch(productsControllerProvider(vendor: vendor));
+    final selected = ref.watch(selectedCategoryProvider);
+    if (selected == null) {
+      return const Center(child: Text("select category you want"));
+    }
+    final productsAsync = ref.watch(categoryProductsControllerProvider(selected.id));
     return productsAsync.when(
       data: (result) {
         switch (result) {
           case Success(:final data):
             if (data.isEmpty) {
-              return const Center(child: Text("No brands found."));
+              return const Center(child: Text("No products found."));
             }
             return Padding(
               padding: const EdgeInsets.all(16.0),
@@ -36,12 +41,11 @@ class ProductsList extends ConsumerWidget {
             );
           case Failure(:final message):
             return Center(child: Text("Error: $message"));
-
           default:
             return const Center(child: Text("Unknown state"));
         }
       },
-      error: (error, s) => Center(child: Text(error.toString())),
+      error: (e, _) => Center(child: Text('Error: $e')),
       loading: () => const Center(child: CircularProgressIndicator()),
     );
   }
