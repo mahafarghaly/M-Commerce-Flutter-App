@@ -7,11 +7,11 @@ part of 'categories_controller.dart';
 // **************************************************************************
 
 String _$categoriesControllerHash() =>
-    r'3c217b9935c84b9300e8b77f2116a5f9043123d1';
+    r'eb4f3be7f27ce75a80ba3fa8ff91e7f7e119ebf1';
 
 /// See also [CategoriesController].
 @ProviderFor(CategoriesController)
-final categoriesControllerProvider = AutoDisposeAsyncNotifierProvider<
+final categoriesControllerProvider = AsyncNotifierProvider<
   CategoriesController,
   ApiResult<List<CategoryEntity>>
 >.internal(
@@ -25,7 +25,6 @@ final categoriesControllerProvider = AutoDisposeAsyncNotifierProvider<
   allTransitiveDependencies: null,
 );
 
-typedef _$CategoriesController =
-    AutoDisposeAsyncNotifier<ApiResult<List<CategoryEntity>>>;
+typedef _$CategoriesController = AsyncNotifier<ApiResult<List<CategoryEntity>>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

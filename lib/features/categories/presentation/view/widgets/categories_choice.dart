@@ -13,7 +13,6 @@ class CategoriesChoice extends ConsumerWidget {
   const CategoriesChoice({super.key});
 @override
   Widget build(BuildContext context, WidgetRef ref) {
-  ref.read(categoriesControllerProvider.notifier);
     final controller = ref.watch(categoriesControllerProvider);
   final selected = ref.watch(selectedCategoryProvider);
 

@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
-import 'package:store_app/features/auth/data/models/customer_response.dart';
-import '../models/customer_request.dart';
+import '../../../base/data/models/draft_order/draft_order_request.dart';
+import '../models/customer/customer_request.dart';
+import '../models/customer/customer_response.dart';
 
 part 'auth_api_service.g.dart';
 
@@ -19,4 +20,6 @@ abstract class AuthApiService {
 
   @POST("customers.json")
   Future<CustomerRequest> addCustomer(@Body() CustomerRequest request);
+  @POST("draft_orders.json")
+  Future<DraftOrderRequest> createDraftOrder(@Body()DraftOrderRequest request);
 }

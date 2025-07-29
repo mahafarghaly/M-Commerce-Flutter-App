@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:store_app/features/auth/data/models/customer_model.dart';
+
+import 'customer_model.dart';
 part 'customer_response.g.dart';
 @JsonSerializable()
 class CustomerResponse {

@@ -6,7 +6,7 @@ import '../../../../../core/networking/api_result.dart';
 import '../../../domain/entity/brand.dart';
 part 'brands_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class BrandsController extends _$BrandsController {
   @override
   Future<ApiResult<List<Brand>>> build() async {

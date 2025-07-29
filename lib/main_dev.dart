@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light.themeData,
       darkTheme: AppTheme.dark.themeData,
-      home: SignInScreen(),
+      home:  SignInScreen(),
     );
   }
 }

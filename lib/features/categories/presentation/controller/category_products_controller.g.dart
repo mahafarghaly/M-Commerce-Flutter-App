@@ -7,7 +7,7 @@ part of 'category_products_controller.dart';
 // **************************************************************************
 
 String _$categoryProductsControllerHash() =>
-    r'b19eae8e1b34afbe96edbff6a4ce65a869d9c590';
+    r'f0e93c71afd727a025546c20ba8283119da8d2cb';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -31,7 +31,7 @@ class _SystemHash {
 }
 
 abstract class _$CategoryProductsController
-    extends BuildlessAutoDisposeAsyncNotifier<ApiResult<List<ProductEntity>>> {
+    extends BuildlessAsyncNotifier<ApiResult<List<ProductEntity>>> {
   late final int id;
 
   FutureOr<ApiResult<List<ProductEntity>>> build(int id);
@@ -77,7 +77,7 @@ class CategoryProductsControllerFamily
 /// See also [CategoryProductsController].
 class CategoryProductsControllerProvider
     extends
-        AutoDisposeAsyncNotifierProviderImpl<
+        AsyncNotifierProviderImpl<
           CategoryProductsController,
           ApiResult<List<ProductEntity>>
         > {
@@ -133,7 +133,7 @@ class CategoryProductsControllerProvider
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<
+  AsyncNotifierProviderElement<
     CategoryProductsController,
     ApiResult<List<ProductEntity>>
   >
@@ -158,14 +158,14 @@ class CategoryProductsControllerProvider
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 mixin CategoryProductsControllerRef
-    on AutoDisposeAsyncNotifierProviderRef<ApiResult<List<ProductEntity>>> {
+    on AsyncNotifierProviderRef<ApiResult<List<ProductEntity>>> {
   /// The parameter `id` of this provider.
   int get id;
 }
 
 class _CategoryProductsControllerProviderElement
     extends
-        AutoDisposeAsyncNotifierProviderElement<
+        AsyncNotifierProviderElement<
           CategoryProductsController,
           ApiResult<List<ProductEntity>>
         >

@@ -6,8 +6,7 @@ import '../../../../core/networking/api_result.dart';
 import '../../../home/domain/entity/product.dart';
 import '../../domain/usecases/get_category_products.dart';
 part 'category_products_controller.g.dart';
-
-@riverpod
+@Riverpod(keepAlive: true)
 class CategoryProductsController extends _$CategoryProductsController {
   @override
   Future<ApiResult<List<ProductEntity>>> build(int id) async {
@@ -34,4 +33,5 @@ class CategoryProductsController extends _$CategoryProductsController {
       return ApiResult.failure(apiError.errorMessage);
     }
   }
+
 }

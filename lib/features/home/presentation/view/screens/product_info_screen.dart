@@ -131,7 +131,7 @@ class ProductInfoScreen extends StatelessWidget {
             padding: EdgeInsets.only(
               left: 16.w,
               right: 16.w,
-              bottom: 8.h,
+              bottom: 16.h,
               top: 8.h,
             ),
             child: DefaultButton(text: "Check Out", onTap: () {}),

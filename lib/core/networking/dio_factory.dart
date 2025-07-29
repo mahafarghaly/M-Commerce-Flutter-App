@@ -12,7 +12,11 @@ class DioFactory {
       dio = Dio();
       dio!
         ..options.connectTimeout = timeout
-        ..options.receiveTimeout = timeout;
+        ..options.receiveTimeout = timeout
+    ..options.headers = {
+    'Content-Type': 'application/json',
+    'X-Shopify-Access-Token': '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',
+    };
       addDioInterceptor();
       return dio!;
     } else {

@@ -4,6 +4,7 @@ import 'package:store_app/features/auth/data/datasource/auth_api_service.dart';
 import 'package:store_app/features/auth/data/repository/auth_repository.dart';
 import 'package:store_app/features/auth/domain/repository/auth_repository_impl.dart';
 import 'package:store_app/features/auth/domain/usecases/add_customer_usecase.dart';
+import 'package:store_app/features/auth/domain/usecases/create_draft_order_usecase.dart';
 import 'package:store_app/features/auth/domain/usecases/get_customers_usecase.dart';
 import 'package:store_app/features/categories/data/datasource/categories_api_servise.dart';
 import 'package:store_app/features/categories/data/repository/categories_repository.dart';
@@ -45,5 +46,5 @@ Future<void> initServiceLocator() async {
   sl.registerLazySingleton<AddCustomerUseCase>(() => AddCustomerUseCase(sl()));
   sl.registerLazySingleton<GetCategoriesUseCase>(() => GetCategoriesUseCase(sl()));
   sl.registerLazySingleton<GetCategoryProductsUseCase>(() => GetCategoryProductsUseCase(sl()));
-
+  sl.registerLazySingleton<CreateDraftOrderUseCase>(() => CreateDraftOrderUseCase(sl()));
 }

@@ -1,6 +1,6 @@
 
 import '../../domain/entities/customer.dart';
-import '../models/customer_model.dart';
+import '../models/customer/customer_model.dart';
 
 extension CustomerModelMapper on CustomerModel {
   Customer toEntity() {

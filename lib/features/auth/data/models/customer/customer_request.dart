@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'customer_model.dart';
+
 part 'customer_request.g.dart';
 @JsonSerializable()
 class CustomerRequest {
