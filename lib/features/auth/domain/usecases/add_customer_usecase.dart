@@ -10,12 +10,14 @@ class AddCustomerUseCase {
   Future<ApiResult<Customer>> addCustomer({
     required String email,
     required String password,
-    String? note,
+    required String firstName,
+    required String lastName,
   }) async {
     return await _authRepository.addCustomer(
       email: email,
       password: password,
-      note: note,
+      firstName: firstName,
+      lastName: lastName,
     );
   }
 }

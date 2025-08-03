@@ -73,12 +73,12 @@ class _AuthApiService implements AuthApiService {
   }
 
   @override
-  Future<DraftOrderRequest> createDraftOrder(DraftOrderRequest request) async {
+  Future<DraftOrderResponse> createDraftOrder(DraftOrderRequest request) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = request;
-    final _options = _setStreamType<DraftOrderRequest>(
+    final _options = _setStreamType<DraftOrderResponse>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -89,9 +89,9 @@ class _AuthApiService implements AuthApiService {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late DraftOrderRequest _value;
+    late DraftOrderResponse _value;
     try {
-      _value = DraftOrderRequest.fromJson(_result.data!);
+      _value = DraftOrderResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

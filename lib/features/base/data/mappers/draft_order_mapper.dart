@@ -5,19 +5,21 @@ import '../models/draft_order/draft_order_model.dart';
 class DraftOrderMapper {
   static DraftOrderEntity modelToEntity(DraftOrderModel model) {
     return DraftOrderEntity(
+      id: model.id,
       email: model.email,
       note: model.note,
       currency: model.currency,
-      lineItems: model.lineItems?.map(LineItemMapper.modelToEntity).toList(),
+      lineItems: model.lineItems.map(LineItemMapper.modelToEntity).toList(),
     );
   }
 
   static DraftOrderModel entityToModel(DraftOrderEntity entity) {
     return DraftOrderModel(
+      id: entity.id,
       email: entity.email,
       note: entity.note,
       currency: entity.currency,
-      lineItems: entity.lineItems?.map(LineItemMapper.entityToModel).toList(),
+      lineItems: entity.lineItems.map(LineItemMapper.entityToModel).toList(),
     );
   }
 }
@@ -25,6 +27,7 @@ class DraftOrderMapper {
 class LineItemMapper {
   static LineItemEntity modelToEntity(LineItem model) {
     return LineItemEntity(
+      id: model.id,
       variantId: model.variantId,
       productId: model.productId,
       title: model.title,
@@ -35,6 +38,7 @@ class LineItemMapper {
   }
   static LineItem entityToModel(LineItemEntity entity) {
     return LineItem(
+      id: entity.id,
       variantId: entity.variantId,
       productId: entity.productId,
       title: entity.title,

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:store_app/core/networking/api_constants.dart';
 
 class DioFactory {
    DioFactory._();
@@ -15,7 +16,7 @@ class DioFactory {
         ..options.receiveTimeout = timeout
     ..options.headers = {
     'Content-Type': 'application/json',
-    'X-Shopify-Access-Token': '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',
+    'X-Shopify-Access-Token': ApiConstants.apiPassword,
     };
       addDioInterceptor();
       return dio!;

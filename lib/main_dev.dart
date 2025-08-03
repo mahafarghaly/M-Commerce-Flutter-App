@@ -9,7 +9,7 @@ import 'app.dart';
 import 'core/utils/theme/app_theme.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load();
   await initServiceLocator();
   runApp(

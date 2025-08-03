@@ -8,17 +8,19 @@ part of 'draft_order_model.dart';
 
 _DraftOrderModel _$DraftOrderModelFromJson(Map<String, dynamic> json) =>
     _DraftOrderModel(
-      email: json['email'] as String,
-      note: json['note'] as String,
-      currency: json['currency'] as String,
+      id: (json['id'] as num?)?.toInt(),
+      email: json['email'] as String?,
+      note: json['note'] as String?,
+      currency: json['currency'] as String?,
       lineItems:
-          (json['line_items'] as List<dynamic>?)
-              ?.map((e) => LineItem.fromJson(e as Map<String, dynamic>))
+          (json['line_items'] as List<dynamic>)
+              .map((e) => LineItem.fromJson(e as Map<String, dynamic>))
               .toList(),
     );
 
 Map<String, dynamic> _$DraftOrderModelToJson(_DraftOrderModel instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'email': instance.email,
       'note': instance.note,
       'currency': instance.currency,
@@ -26,15 +28,17 @@ Map<String, dynamic> _$DraftOrderModelToJson(_DraftOrderModel instance) =>
     };
 
 _LineItem _$LineItemFromJson(Map<String, dynamic> json) => _LineItem(
+  id: (json['id'] as num?)?.toInt(),
   variantId: (json['variant_id'] as num?)?.toInt(),
   productId: (json['product_id'] as num?)?.toInt(),
-  title: json['title'] as String,
-  quantity: (json['quantity'] as num).toInt(),
-  price: (json['price'] as num).toDouble(),
-  sku: json['sku'] as String,
+  title: json['title'] as String?,
+  quantity: (json['quantity'] as num?)?.toInt(),
+  price: json['price'] as String?,
+  sku: json['sku'] as String?,
 );
 
 Map<String, dynamic> _$LineItemToJson(_LineItem instance) => <String, dynamic>{
+  'id': instance.id,
   'variant_id': instance.variantId,
   'product_id': instance.productId,
   'title': instance.title,

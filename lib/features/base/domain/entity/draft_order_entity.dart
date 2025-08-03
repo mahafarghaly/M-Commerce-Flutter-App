@@ -1,30 +1,35 @@
 class DraftOrderEntity {
-  final String email;
-  final String note;
-  final String currency;
-  final List<LineItemEntity>? lineItems;
+  final int? id;
+  final String? email;
+  final String? note;
+  final String? currency;
+  final List<LineItemEntity> lineItems;
 
   DraftOrderEntity({
-     required this.email,
+    this.id,
+    required this.email,
     required this.note,
     required this.currency,
-     this.lineItems,
+    required this.lineItems,
   });
 }
+
 class LineItemEntity {
+  final int? id;
   final int? variantId;
   final int? productId;
-  final String title;
-  final int quantity;
-  final double price;
-  final String sku;
+  final String? title;
+  final int? quantity;
+  final String? price;
+  final String? sku;
 
   LineItemEntity({
+    this.id,
     this.variantId,
     this.productId,
-    required this.title,
-    required this.quantity,
-    required this.price,
-    required this.sku,
+    this.title,
+    this.quantity,
+    this.price,
+    this.sku,
   });
 }

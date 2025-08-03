@@ -24,4 +24,14 @@ class InputValidators {
     }
     return null;
   }
+ static String? validateName(String? value) {
+   if (value == null || value.trim().isEmpty) {
+     return 'This field is required';
+   }
+   if (value.length < 2) {
+     return 'First name must be at least 2 characters';
+   }
+   return null;
+ }
+
 }

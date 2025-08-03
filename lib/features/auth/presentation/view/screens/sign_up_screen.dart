@@ -14,15 +14,17 @@ import '../../../../../core/utils/app_navigation.dart';
 import '../../controller/auth_controller.dart';
 import '../widgets/default_text_field.dart';
 
-class SignUpScreen extends ConsumerWidget with BaseView{
+class SignUpScreen extends ConsumerWidget with BaseView {
   SignUpScreen({super.key});
 
   final _formKey = GlobalKey<FormState>();
-
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController fNameController = TextEditingController();
+  final TextEditingController lNameController = TextEditingController();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
+
     return Scaffold(
       appBar: AppBar(title: const Text("Sing up")),
       body: SafeArea(
@@ -40,6 +42,24 @@ class SignUpScreen extends ConsumerWidget with BaseView{
                           backgroundImage: AssetImage(AppAssets.shoppingImage),
                           radius: 130.r,
                         ).paddingVertical(10.h),
+                        DefaultTextField(
+                          label: 'First Name',
+                          hint: 'Enter Your First Name.',
+                          prefixIcon: Icons.person_2_outlined,
+                          keyboardType: TextInputType.name,
+                          controller: fNameController,
+                          validator: InputValidators.validateName,
+                        ),
+                        SizedBox(height: 20.h),
+                        DefaultTextField(
+                          label: 'Last Name',
+                          hint: 'Enter Your Last Name.',
+                          keyboardType: TextInputType.name,
+                          prefixIcon: Icons.person_2_outlined,
+                          controller: lNameController,
+                          validator: InputValidators.validateName,
+                        ),
+                        SizedBox(height: 20.h),
                         DefaultTextField(
                           label: 'Email',
                           hint: 'Enter Your Email.',
@@ -60,11 +80,8 @@ class SignUpScreen extends ConsumerWidget with BaseView{
                         ),
                         TextButton(
                           onPressed: () {
-                            AppNavigation.navigationTo(
-                              context,
-                               SignInScreen(),
-                            );
-                           FocusManager.instance.primaryFocus?.unfocus();
+                            AppNavigation.navigationTo(context, SignInScreen());
+                            FocusManager.instance.primaryFocus?.unfocus();
                           },
                           child: Text(
                             "Already have account, Sign in?",
@@ -90,18 +107,26 @@ class SignUpScreen extends ConsumerWidget with BaseView{
                   onTap: () async {
                     final email = emailController.text;
                     final password = passwordController.text;
+                    final firstName = fNameController.text;
+                    final lastName = lNameController.text;
                     if (_formKey.currentState!.validate()) {
                       final result = await ref
                           .read(authControllerProvider.notifier)
-                          .signUp(email, password);
+                          .signUp(
+                            email: email,
+                            password: password,
+                            firstName: firstName,
+                            lastName: lastName,
+                          );
                       switch (result) {
                         case Success(:final data):
-                          AppNavigation.navigationTo(context, const App());
+                          // AppNavigation.navigationTo(context, const App());
                           break;
                         case Failure(:final message):
-                       showToastMessage(message: message, context: context);
+                          showToastMessage(message: message, context: context);
                           break;
                       }
+                      print("firstname: $firstName: lastname: $lastName email: $email tage: $password ");
                     }
                   },
                 ),

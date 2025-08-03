@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$DraftOrderModel {
 
- String get email; String get note; String get currency;@JsonKey(name: 'line_items') List<LineItem>? get lineItems;
+ int? get id; String? get email; String? get note; String? get currency;@JsonKey(name: 'line_items') List<LineItem> get lineItems;
 /// Create a copy of DraftOrderModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $DraftOrderModelCopyWith<DraftOrderModel> get copyWith => _$DraftOrderModelCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DraftOrderModel&&(identical(other.email, email) || other.email == email)&&(identical(other.note, note) || other.note == note)&&(identical(other.currency, currency) || other.currency == currency)&&const DeepCollectionEquality().equals(other.lineItems, lineItems));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DraftOrderModel&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.note, note) || other.note == note)&&(identical(other.currency, currency) || other.currency == currency)&&const DeepCollectionEquality().equals(other.lineItems, lineItems));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,email,note,currency,const DeepCollectionEquality().hash(lineItems));
+int get hashCode => Object.hash(runtimeType,id,email,note,currency,const DeepCollectionEquality().hash(lineItems));
 
 @override
 String toString() {
-  return 'DraftOrderModel(email: $email, note: $note, currency: $currency, lineItems: $lineItems)';
+  return 'DraftOrderModel(id: $id, email: $email, note: $note, currency: $currency, lineItems: $lineItems)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $DraftOrderModelCopyWith<$Res>  {
   factory $DraftOrderModelCopyWith(DraftOrderModel value, $Res Function(DraftOrderModel) _then) = _$DraftOrderModelCopyWithImpl;
 @useResult
 $Res call({
- String email, String note, String currency,@JsonKey(name: 'line_items') List<LineItem>? lineItems
+ int? id, String? email, String? note, String? currency,@JsonKey(name: 'line_items') List<LineItem> lineItems
 });
 
 
@@ -66,13 +66,14 @@ class _$DraftOrderModelCopyWithImpl<$Res>
 
 /// Create a copy of DraftOrderModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? email = null,Object? note = null,Object? currency = null,Object? lineItems = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? email = freezed,Object? note = freezed,Object? currency = freezed,Object? lineItems = null,}) {
   return _then(_self.copyWith(
-email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,note: null == note ? _self.note : note // ignore: cast_nullable_to_non_nullable
-as String,currency: null == currency ? _self.currency : currency // ignore: cast_nullable_to_non_nullable
-as String,lineItems: freezed == lineItems ? _self.lineItems : lineItems // ignore: cast_nullable_to_non_nullable
-as List<LineItem>?,
+id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int?,email: freezed == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String?,note: freezed == note ? _self.note : note // ignore: cast_nullable_to_non_nullable
+as String?,currency: freezed == currency ? _self.currency : currency // ignore: cast_nullable_to_non_nullable
+as String?,lineItems: null == lineItems ? _self.lineItems : lineItems // ignore: cast_nullable_to_non_nullable
+as List<LineItem>,
   ));
 }
 
@@ -83,19 +84,18 @@ as List<LineItem>?,
 @JsonSerializable()
 
 class _DraftOrderModel implements DraftOrderModel {
-   _DraftOrderModel({required this.email, required this.note, required this.currency, @JsonKey(name: 'line_items') required final  List<LineItem>? lineItems}): _lineItems = lineItems;
+   _DraftOrderModel({this.id, this.email, this.note, this.currency, @JsonKey(name: 'line_items') required final  List<LineItem> lineItems}): _lineItems = lineItems;
   factory _DraftOrderModel.fromJson(Map<String, dynamic> json) => _$DraftOrderModelFromJson(json);
 
-@override final  String email;
-@override final  String note;
-@override final  String currency;
- final  List<LineItem>? _lineItems;
-@override@JsonKey(name: 'line_items') List<LineItem>? get lineItems {
-  final value = _lineItems;
-  if (value == null) return null;
+@override final  int? id;
+@override final  String? email;
+@override final  String? note;
+@override final  String? currency;
+ final  List<LineItem> _lineItems;
+@override@JsonKey(name: 'line_items') List<LineItem> get lineItems {
   if (_lineItems is EqualUnmodifiableListView) return _lineItems;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(value);
+  return EqualUnmodifiableListView(_lineItems);
 }
 
 
@@ -112,16 +112,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DraftOrderModel&&(identical(other.email, email) || other.email == email)&&(identical(other.note, note) || other.note == note)&&(identical(other.currency, currency) || other.currency == currency)&&const DeepCollectionEquality().equals(other._lineItems, _lineItems));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DraftOrderModel&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.note, note) || other.note == note)&&(identical(other.currency, currency) || other.currency == currency)&&const DeepCollectionEquality().equals(other._lineItems, _lineItems));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,email,note,currency,const DeepCollectionEquality().hash(_lineItems));
+int get hashCode => Object.hash(runtimeType,id,email,note,currency,const DeepCollectionEquality().hash(_lineItems));
 
 @override
 String toString() {
-  return 'DraftOrderModel(email: $email, note: $note, currency: $currency, lineItems: $lineItems)';
+  return 'DraftOrderModel(id: $id, email: $email, note: $note, currency: $currency, lineItems: $lineItems)';
 }
 
 
@@ -132,7 +132,7 @@ abstract mixin class _$DraftOrderModelCopyWith<$Res> implements $DraftOrderModel
   factory _$DraftOrderModelCopyWith(_DraftOrderModel value, $Res Function(_DraftOrderModel) _then) = __$DraftOrderModelCopyWithImpl;
 @override @useResult
 $Res call({
- String email, String note, String currency,@JsonKey(name: 'line_items') List<LineItem>? lineItems
+ int? id, String? email, String? note, String? currency,@JsonKey(name: 'line_items') List<LineItem> lineItems
 });
 
 
@@ -149,13 +149,14 @@ class __$DraftOrderModelCopyWithImpl<$Res>
 
 /// Create a copy of DraftOrderModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? email = null,Object? note = null,Object? currency = null,Object? lineItems = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? email = freezed,Object? note = freezed,Object? currency = freezed,Object? lineItems = null,}) {
   return _then(_DraftOrderModel(
-email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,note: null == note ? _self.note : note // ignore: cast_nullable_to_non_nullable
-as String,currency: null == currency ? _self.currency : currency // ignore: cast_nullable_to_non_nullable
-as String,lineItems: freezed == lineItems ? _self._lineItems : lineItems // ignore: cast_nullable_to_non_nullable
-as List<LineItem>?,
+id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int?,email: freezed == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String?,note: freezed == note ? _self.note : note // ignore: cast_nullable_to_non_nullable
+as String?,currency: freezed == currency ? _self.currency : currency // ignore: cast_nullable_to_non_nullable
+as String?,lineItems: null == lineItems ? _self._lineItems : lineItems // ignore: cast_nullable_to_non_nullable
+as List<LineItem>,
   ));
 }
 
@@ -166,7 +167,7 @@ as List<LineItem>?,
 /// @nodoc
 mixin _$LineItem {
 
-@JsonKey(name: 'variant_id') int? get variantId;@JsonKey(name: 'product_id') int? get productId; String get title; int get quantity; double get price; String get sku;
+ int? get id;@JsonKey(name: 'variant_id') int? get variantId;@JsonKey(name: 'product_id') int? get productId; String? get title; int? get quantity; String? get price; String? get sku;
 /// Create a copy of LineItem
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -179,16 +180,16 @@ $LineItemCopyWith<LineItem> get copyWith => _$LineItemCopyWithImpl<LineItem>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LineItem&&(identical(other.variantId, variantId) || other.variantId == variantId)&&(identical(other.productId, productId) || other.productId == productId)&&(identical(other.title, title) || other.title == title)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.price, price) || other.price == price)&&(identical(other.sku, sku) || other.sku == sku));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LineItem&&(identical(other.id, id) || other.id == id)&&(identical(other.variantId, variantId) || other.variantId == variantId)&&(identical(other.productId, productId) || other.productId == productId)&&(identical(other.title, title) || other.title == title)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.price, price) || other.price == price)&&(identical(other.sku, sku) || other.sku == sku));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,variantId,productId,title,quantity,price,sku);
+int get hashCode => Object.hash(runtimeType,id,variantId,productId,title,quantity,price,sku);
 
 @override
 String toString() {
-  return 'LineItem(variantId: $variantId, productId: $productId, title: $title, quantity: $quantity, price: $price, sku: $sku)';
+  return 'LineItem(id: $id, variantId: $variantId, productId: $productId, title: $title, quantity: $quantity, price: $price, sku: $sku)';
 }
 
 
@@ -199,7 +200,7 @@ abstract mixin class $LineItemCopyWith<$Res>  {
   factory $LineItemCopyWith(LineItem value, $Res Function(LineItem) _then) = _$LineItemCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'variant_id') int? variantId,@JsonKey(name: 'product_id') int? productId, String title, int quantity, double price, String sku
+ int? id,@JsonKey(name: 'variant_id') int? variantId,@JsonKey(name: 'product_id') int? productId, String? title, int? quantity, String? price, String? sku
 });
 
 
@@ -216,15 +217,16 @@ class _$LineItemCopyWithImpl<$Res>
 
 /// Create a copy of LineItem
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? variantId = freezed,Object? productId = freezed,Object? title = null,Object? quantity = null,Object? price = null,Object? sku = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? variantId = freezed,Object? productId = freezed,Object? title = freezed,Object? quantity = freezed,Object? price = freezed,Object? sku = freezed,}) {
   return _then(_self.copyWith(
-variantId: freezed == variantId ? _self.variantId : variantId // ignore: cast_nullable_to_non_nullable
+id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int?,variantId: freezed == variantId ? _self.variantId : variantId // ignore: cast_nullable_to_non_nullable
 as int?,productId: freezed == productId ? _self.productId : productId // ignore: cast_nullable_to_non_nullable
-as int?,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,quantity: null == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
-as int,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
-as double,sku: null == sku ? _self.sku : sku // ignore: cast_nullable_to_non_nullable
-as String,
+as int?,title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String?,quantity: freezed == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
+as int?,price: freezed == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
+as String?,sku: freezed == sku ? _self.sku : sku // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -235,15 +237,16 @@ as String,
 @JsonSerializable()
 
 class _LineItem implements LineItem {
-   _LineItem({@JsonKey(name: 'variant_id') this.variantId, @JsonKey(name: 'product_id') this.productId, required this.title, required this.quantity, required this.price, required this.sku});
+   _LineItem({this.id, @JsonKey(name: 'variant_id') this.variantId, @JsonKey(name: 'product_id') this.productId, this.title, this.quantity, this.price, this.sku});
   factory _LineItem.fromJson(Map<String, dynamic> json) => _$LineItemFromJson(json);
 
+@override final  int? id;
 @override@JsonKey(name: 'variant_id') final  int? variantId;
 @override@JsonKey(name: 'product_id') final  int? productId;
-@override final  String title;
-@override final  int quantity;
-@override final  double price;
-@override final  String sku;
+@override final  String? title;
+@override final  int? quantity;
+@override final  String? price;
+@override final  String? sku;
 
 /// Create a copy of LineItem
 /// with the given fields replaced by the non-null parameter values.
@@ -258,16 +261,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LineItem&&(identical(other.variantId, variantId) || other.variantId == variantId)&&(identical(other.productId, productId) || other.productId == productId)&&(identical(other.title, title) || other.title == title)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.price, price) || other.price == price)&&(identical(other.sku, sku) || other.sku == sku));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LineItem&&(identical(other.id, id) || other.id == id)&&(identical(other.variantId, variantId) || other.variantId == variantId)&&(identical(other.productId, productId) || other.productId == productId)&&(identical(other.title, title) || other.title == title)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.price, price) || other.price == price)&&(identical(other.sku, sku) || other.sku == sku));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,variantId,productId,title,quantity,price,sku);
+int get hashCode => Object.hash(runtimeType,id,variantId,productId,title,quantity,price,sku);
 
 @override
 String toString() {
-  return 'LineItem(variantId: $variantId, productId: $productId, title: $title, quantity: $quantity, price: $price, sku: $sku)';
+  return 'LineItem(id: $id, variantId: $variantId, productId: $productId, title: $title, quantity: $quantity, price: $price, sku: $sku)';
 }
 
 
@@ -278,7 +281,7 @@ abstract mixin class _$LineItemCopyWith<$Res> implements $LineItemCopyWith<$Res>
   factory _$LineItemCopyWith(_LineItem value, $Res Function(_LineItem) _then) = __$LineItemCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'variant_id') int? variantId,@JsonKey(name: 'product_id') int? productId, String title, int quantity, double price, String sku
+ int? id,@JsonKey(name: 'variant_id') int? variantId,@JsonKey(name: 'product_id') int? productId, String? title, int? quantity, String? price, String? sku
 });
 
 
@@ -295,15 +298,16 @@ class __$LineItemCopyWithImpl<$Res>
 
 /// Create a copy of LineItem
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? variantId = freezed,Object? productId = freezed,Object? title = null,Object? quantity = null,Object? price = null,Object? sku = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? variantId = freezed,Object? productId = freezed,Object? title = freezed,Object? quantity = freezed,Object? price = freezed,Object? sku = freezed,}) {
   return _then(_LineItem(
-variantId: freezed == variantId ? _self.variantId : variantId // ignore: cast_nullable_to_non_nullable
+id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int?,variantId: freezed == variantId ? _self.variantId : variantId // ignore: cast_nullable_to_non_nullable
 as int?,productId: freezed == productId ? _self.productId : productId // ignore: cast_nullable_to_non_nullable
-as int?,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,quantity: null == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
-as int,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
-as double,sku: null == sku ? _self.sku : sku // ignore: cast_nullable_to_non_nullable
-as String,
+as int?,title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String?,quantity: freezed == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
+as int?,price: freezed == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
+as String?,sku: freezed == sku ? _self.sku : sku // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

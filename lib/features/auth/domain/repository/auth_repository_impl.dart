@@ -31,13 +31,14 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<ApiResult<Customer>> addCustomer({
+  Future<ApiResult<Customer>> addCustomer ({
     required String email,
     required String password,
-    String? note,
+    required String firstName,
+    required String lastName,
   }) async {
     try {
-      final model = CustomerModel(email: email, password: password, note: note);
+      final model = CustomerModel(email: email, password: password,firstName: firstName,lastName: lastName);
       final request = CustomerRequest(customer: model);
       final response = await _authApiService.addCustomer(request);
       final addedCustomer = response.customer.toEntity();

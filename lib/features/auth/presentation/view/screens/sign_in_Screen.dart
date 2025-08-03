@@ -5,10 +5,12 @@ import 'package:store_app/core/extenstions/context_extenstion.dart';
 import 'package:store_app/core/extenstions/widget_extenstion.dart';
 import 'package:store_app/core/utils/app_assets.dart';
 import 'package:store_app/core/utils/app_navigation.dart';
+import 'package:store_app/core/utils/constants.dart';
 import 'package:store_app/features/auth/presentation/view/screens/sign_up_screen.dart';
 import '../../../../../app.dart';
 import '../../../../../core/networking/api_result.dart';
 import '../../../../base/helpers/base_view.dart';
+import '../../../../base/helpers/secure_storge_helper.dart';
 import '../../../../base/presentation/view/widgets/default_Button.dart';
 import '../../controller/auth_controller.dart';
 import '../widgets/default_text_field.dart';
@@ -86,7 +88,9 @@ class SignInScreen extends ConsumerWidget with BaseView{
                   onTap: () async {
                     final email = emailController.text;
                     final password = passwordController.text;
-
+                    final fav=await SecureStorageHelper.getDraftOrderId(key: Constants.favDraftOrderId);
+                    final cart= await SecureStorageHelper.getDraftOrderId(key: Constants.cartDraftOrderId);
+                    print("draftorderids: $fav :: $cart");
                     if (_formKey.currentState!.validate()) {
                       final result =
                           await ref
@@ -100,7 +104,11 @@ class SignInScreen extends ConsumerWidget with BaseView{
                             customer.email == email && customer.password == password,
                           );
                           if (isValid) {
-                            AppNavigation.navigationTo(context, const App());
+                           // await SecureStorageHelper.saveCredentials(email: email,password: password);
+                            final fav=await SecureStorageHelper.getDraftOrderId(key: "favoriteDraftOrderId");
+                           final cart= await SecureStorageHelper.getDraftOrderId(key: "cartDraftOrderId");
+                            //AppNavigation.navigationTo(context, const App());
+                            print("draftorderids: $fav :: $cart");
                           } else {
                             showToastMessage(message: "Email or password may be wrong", context: context);
                           }
