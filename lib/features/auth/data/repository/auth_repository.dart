@@ -15,4 +15,8 @@ abstract class AuthRepository {
   Future<ApiResult<DraftOrderEntity>> createDraftOrder({
     required DraftOrderEntity draftOrder,
   });
+  Future<ApiResult<Customer>> updateCustomer({
+    required int id,
+    required Customer customer,
+  });
 }

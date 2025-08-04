@@ -15,7 +15,7 @@ import '../../../../base/presentation/view/widgets/default_Button.dart';
 import '../../controller/auth_controller.dart';
 import '../widgets/default_text_field.dart';
 
-class SignInScreen extends ConsumerWidget with BaseView{
+class SignInScreen extends ConsumerWidget with BaseView {
   SignInScreen({super.key});
 
   final _formKey = GlobalKey<FormState>();
@@ -59,10 +59,7 @@ class SignInScreen extends ConsumerWidget with BaseView{
                         ),
                         TextButton(
                           onPressed: () {
-                            AppNavigation.navigationTo(
-                              context,
-                               SignUpScreen(),
-                            );
+                            AppNavigation.navigationTo(context, SignUpScreen());
                           },
                           child: Text(
                             "Do`nt have an account,create one?",
@@ -88,9 +85,11 @@ class SignInScreen extends ConsumerWidget with BaseView{
                   onTap: () async {
                     final email = emailController.text;
                     final password = passwordController.text;
-                    final fav=await SecureStorageHelper.getDraftOrderId(key: Constants.favDraftOrderId);
-                    final cart= await SecureStorageHelper.getDraftOrderId(key: Constants.cartDraftOrderId);
-                    print("draftorderids: $fav :: $cart");
+                    final semail = await SecureStorageHelper.getEmail();
+                    final spassword = await SecureStorageHelper.getPassword();
+                    final favoriteId= await SecureStorageHelper.getDraftOrderId(key: Constants.favDraftOrderId);
+                    final cartId= await SecureStorageHelper.getDraftOrderId(key: Constants.cartDraftOrderId);
+                    print("user data: $semail :: $spassword favorite::$favoriteId cart::$cartId");
                     if (_formKey.currentState!.validate()) {
                       final result =
                           await ref
@@ -100,17 +99,23 @@ class SignInScreen extends ConsumerWidget with BaseView{
                       switch (result) {
                         case Success(:final data):
                           final isValid = data.any(
-                                (customer) =>
-                            customer.email == email && customer.password == password,
+                            (customer) =>
+                                customer.email == email &&
+                                customer.password == password,
                           );
+
                           if (isValid) {
-                           // await SecureStorageHelper.saveCredentials(email: email,password: password);
-                            final fav=await SecureStorageHelper.getDraftOrderId(key: "favoriteDraftOrderId");
-                           final cart= await SecureStorageHelper.getDraftOrderId(key: "cartDraftOrderId");
-                            //AppNavigation.navigationTo(context, const App());
-                            print("draftorderids: $fav :: $cart");
+                            await SecureStorageHelper.saveCredentials(
+                              email: email,
+                              password: password,
+                            );
+
+                            AppNavigation.navigationTo(context, const App());
                           } else {
-                            showToastMessage(message: "Email or password may be wrong", context: context);
+                            showToastMessage(
+                              message: "Email or password may be wrong",
+                              context: context,
+                            );
                           }
                           break;
                         case Failure(:final message):

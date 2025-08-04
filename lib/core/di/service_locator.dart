@@ -15,6 +15,7 @@ import 'package:store_app/features/home/domain/repository/home_repository_impl.d
 import 'package:store_app/features/home/domain/usecases/brands_usecase.dart';
 import 'package:store_app/features/home/domain/usecases/products_usecase.dart';
 
+import '../../features/auth/domain/usecases/update_customer_note_usecase.dart';
 import '../../features/home/data/datasource/home_api_service.dart';
 import '../../features/home/data/repository/home_repostory.dart';
 import '../networking/api_constants.dart';
@@ -47,4 +48,5 @@ Future<void> initServiceLocator() async {
   sl.registerLazySingleton<GetCategoriesUseCase>(() => GetCategoriesUseCase(sl()));
   sl.registerLazySingleton<GetCategoryProductsUseCase>(() => GetCategoryProductsUseCase(sl()));
   sl.registerLazySingleton<CreateDraftOrderUseCase>(() => CreateDraftOrderUseCase(sl()));
+  sl.registerLazySingleton<UpdateCustomerNoteUesCase>(() => UpdateCustomerNoteUesCase(sl()));
 }

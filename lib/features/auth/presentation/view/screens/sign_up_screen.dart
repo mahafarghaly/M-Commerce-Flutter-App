@@ -118,15 +118,15 @@ class SignUpScreen extends ConsumerWidget with BaseView {
                             firstName: firstName,
                             lastName: lastName,
                           );
+
                       switch (result) {
                         case Success(:final data):
-                          // AppNavigation.navigationTo(context, const App());
+                          AppNavigation.navigationTo(context,  SignInScreen());
                           break;
                         case Failure(:final message):
                           showToastMessage(message: message, context: context);
                           break;
                       }
-                      print("firstname: $firstName: lastname: $lastName email: $email tage: $password ");
                     }
                   },
                 ),
