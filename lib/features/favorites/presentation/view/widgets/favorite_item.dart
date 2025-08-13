@@ -2,21 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store_app/core/extenstions/context_extenstion.dart';
-import 'package:store_app/core/utils/app_assets.dart';
-import 'package:store_app/core/utils/app_navigation.dart';
-import 'package:store_app/features/home/domain/entity/product.dart';
-import 'package:store_app/features/home/presentation/view/screens/product_info_screen.dart';
-
-class ProductItem extends StatelessWidget {
-  const ProductItem({super.key, required this.product});
-
-  final ProductEntity product;
+import 'package:store_app/features/base/domain/entity/draft_order_entity.dart';
+class FavoriteItem extends StatelessWidget {
+  const FavoriteItem({super.key, required this.lineItemEntity});
+final LineItemEntity lineItemEntity;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        AppNavigation.navigationTo(context, ProductInfoScreen(product: product,));
+     //   AppNavigation.navigationTo(context, ProductInfoScreen(product: product,));
       },
       child: Container(
         width: 200.w,
@@ -40,17 +35,17 @@ class ProductItem extends StatelessWidget {
                   ),
                 ),
                 child: CachedNetworkImage(
-                  imageUrl: product.images[0].src,
+                  imageUrl: lineItemEntity.properties?[2].value??"",
                   fit: BoxFit.fill,
                   height: 100,
                   width: 100,
                   progressIndicatorBuilder:
                       (context, url, downloadProgress) => Center(
-                        child: CircularProgressIndicator(
-                          value: downloadProgress.progress,
-                          color: context.colorScheme.secondary,
-                        ),
-                      ),
+                    child: CircularProgressIndicator(
+                      value: downloadProgress.progress,
+                      color: context.colorScheme.secondary,
+                    ),
+                  ),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
@@ -59,10 +54,10 @@ class ProductItem extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.0.w),
               child: Text(
-                product.title.split('|').last.trim(),
+                lineItemEntity.title!.split('|').last.trim(),
                 style: context.textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16.sp
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.sp
                 ),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
@@ -81,7 +76,7 @@ class ProductItem extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      "${(product.variants?.isNotEmpty ?? false) ? product.variants![0].price : 0} EG",
+                      "${lineItemEntity.price} EG",
                       style: context.textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),

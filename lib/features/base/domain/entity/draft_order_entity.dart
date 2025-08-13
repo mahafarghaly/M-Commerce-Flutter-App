@@ -1,35 +1,36 @@
-class DraftOrderEntity {
-  final int? id;
-  final String? email;
-  final String? note;
-  final String? currency;
-  final List<LineItemEntity> lineItems;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  DraftOrderEntity({
-    this.id,
-    required this.email,
-    required this.note,
-    required this.currency,
-    required this.lineItems,
-  });
+part 'draft_order_entity.freezed.dart';
+
+@freezed
+abstract class DraftOrderEntity with _$DraftOrderEntity {
+  const factory DraftOrderEntity({
+    int? id,
+    String? email,
+    String? note,
+    String? currency,
+    required List<LineItemEntity> lineItems,
+  }) = _DraftOrderEntity;
 }
 
-class LineItemEntity {
-  final int? id;
-  final int? variantId;
-  final int? productId;
-  final String? title;
-  final int? quantity;
-  final String? price;
-  final String? sku;
+@freezed
+abstract class LineItemEntity with _$LineItemEntity {
+  const factory LineItemEntity({
+    int? id,
+    int? variantId,
+    int? productId,
+    String? title,
+    int? quantity,
+    String? price,
+    String? sku,
+    List<PropertyEntity>? properties,
+  }) = _LineItemEntity;
+}
 
-  LineItemEntity({
-    this.id,
-    this.variantId,
-    this.productId,
-    this.title,
-    this.quantity,
-    this.price,
-    this.sku,
-  });
+@freezed
+abstract class PropertyEntity with _$PropertyEntity {
+  const factory PropertyEntity({
+    String? name,
+    String? value,
+  }) = _PropertyEntity;
 }

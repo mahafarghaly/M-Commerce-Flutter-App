@@ -7,7 +7,6 @@ import 'package:store_app/features/auth/domain/entities/customer.dart';
 import 'package:store_app/features/base/data/mappers/draft_order_mapper.dart';
 import 'package:store_app/features/base/data/models/draft_order/draft_order_request.dart';
 import 'package:store_app/features/base/domain/entity/draft_order_entity.dart';
-
 import '../../../../core/networking/api_error_handler.dart';
 import '../../data/models/customer/customer_model.dart';
 
@@ -63,37 +62,16 @@ class AuthRepositoryImpl extends AuthRepository {
     }
   }
 
-  // @override
-  // Future<ApiResult<Customer>> updateCustomer({  required int id,required Customer customer,}) async{
-  //   try {
-  //     final request = CustomerRequest(customer: CustomerModel(cutomer));
-  //     final result = await _authApiService.updateCustomer(id, request);
-  //     final updatedCustomer = result.customer.toEntity();
-  //     return ApiResult.success(updatedCustomer);
-  //   } catch (error) {
-  //     final apiError = parseApiError(error);
-  //     return ApiResult.failure(apiError.errorMessage);
-  //   }
-  //
-  // }
   @override
   Future<ApiResult<Customer>> updateCustomer({
     required int id,
     required Customer customer,
   }) async {
     try {
-      // Convert the domain entity to the model
       final customerModel = CustomerModelMapper.fromEntity(customer);
-
-      // Wrap it in the request model
       final request = CustomerRequest(customer: customerModel);
-
-      // Send the update request to the API
       final result = await _authApiService.updateCustomer(id, request);
-
-      // Convert the API response back to domain entity
       final updatedCustomer = result.customer.toEntity();
-
       return ApiResult.success(updatedCustomer);
     } catch (error) {
       final apiError = parseApiError(error);

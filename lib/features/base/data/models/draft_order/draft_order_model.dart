@@ -28,7 +28,18 @@ abstract class LineItem with _$LineItem {
      int? quantity,
      String? price,
      String? sku,
+    List<Property>? properties,
   }) = _LineItem;
 
   factory LineItem.fromJson(Map<String, dynamic> json) => _$LineItemFromJson(json);
+}
+@freezed
+abstract class Property with _$Property {
+  factory Property({
+    required String? name,
+    required String? value,
+  }) = _Property;
+
+  factory Property.fromJson(Map<String, dynamic> json) =>
+      _$PropertyFromJson(json);
 }

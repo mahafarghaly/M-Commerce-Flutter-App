@@ -157,4 +157,18 @@ class AuthController extends _$AuthController {
       return ApiResult.failure(apiError.errorMessage);
     }
   }
+  void saveUserData({required String email,required String password,required Customer matchedCustomer})async{
+    await SecureStorageHelper.saveCredentials(
+      email: email,
+      password: password,
+    );
+    await SecureStorageHelper.saveDraftOrderId(
+      key: Constants.favDraftOrderId,
+      draftOrderId: (matchedCustomer.note ?? '').split(',').first,
+    );
+    await SecureStorageHelper.saveDraftOrderId(
+      key: Constants.cartDraftOrderId,
+      draftOrderId: (matchedCustomer.note ?? '').split(',').last,
+    );
+  }
 }

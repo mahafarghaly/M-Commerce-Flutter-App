@@ -34,6 +34,9 @@ class LineItemMapper {
       quantity: model.quantity,
       price: model.price,
       sku: model.sku,
+      properties: model.properties
+          ?.map(PropertyMapper.modelToEntity)
+          .toList(),
     );
   }
   static LineItem entityToModel(LineItemEntity entity) {
@@ -45,6 +48,24 @@ class LineItemMapper {
       quantity: entity.quantity,
       price: entity.price,
       sku: entity.sku,
+      properties: entity.properties
+          ?.map(PropertyMapper.entityToModel)
+          .toList(),
+    );
+  }
+}
+class PropertyMapper {
+  static PropertyEntity modelToEntity(Property model) {
+    return PropertyEntity(
+      name: model.name,
+      value: model.value,
+    );
+  }
+
+  static Property entityToModel(PropertyEntity entity) {
+    return Property(
+      name: entity.name,
+      value: entity.value,
     );
   }
 }

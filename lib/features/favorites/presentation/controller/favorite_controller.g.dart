@@ -1,29 +1,31 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'auth_controller.dart';
+part of 'favorite_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$authControllerHash() => r'ef4d6aa4bdb095775546f24ccbe41047472aa89f';
+String _$favoriteControllerHash() =>
+    r'fe48863bddcd3add3317d717ab7c7b4382d266a5';
 
-/// See also [AuthController].
-@ProviderFor(AuthController)
-final authControllerProvider = AutoDisposeAsyncNotifierProvider<
-  AuthController,
-  ApiResult<Customer>?
+/// See also [FavoriteController].
+@ProviderFor(FavoriteController)
+final favoriteControllerProvider = AutoDisposeAsyncNotifierProvider<
+  FavoriteController,
+  ApiResult<DraftOrderEntity>?
 >.internal(
-  AuthController.new,
-  name: r'authControllerProvider',
+  FavoriteController.new,
+  name: r'favoriteControllerProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product')
           ? null
-          : _$authControllerHash,
+          : _$favoriteControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$AuthController = AutoDisposeAsyncNotifier<ApiResult<Customer>?>;
+typedef _$FavoriteController =
+    AutoDisposeAsyncNotifier<ApiResult<DraftOrderEntity>?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

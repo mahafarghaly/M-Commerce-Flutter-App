@@ -6,6 +6,11 @@ import 'package:store_app/features/auth/domain/repository/auth_repository_impl.d
 import 'package:store_app/features/auth/domain/usecases/add_customer_usecase.dart';
 import 'package:store_app/features/auth/domain/usecases/create_draft_order_usecase.dart';
 import 'package:store_app/features/auth/domain/usecases/get_customers_usecase.dart';
+import 'package:store_app/features/base/data/datasource/base_api_service.dart';
+import 'package:store_app/features/base/data/repository/base_repository.dart';
+import 'package:store_app/features/base/domain/repository/base_repository_impl.dart';
+import 'package:store_app/features/base/domain/usecases/get_draft_order_by_id_usecase.dart';
+import 'package:store_app/features/base/domain/usecases/update_draft_order_usecase.dart';
 import 'package:store_app/features/categories/data/datasource/categories_api_servise.dart';
 import 'package:store_app/features/categories/data/repository/categories_repository.dart';
 import 'package:store_app/features/categories/domain/repository/categories_repository_impl.dart';
@@ -36,10 +41,14 @@ Future<void> initServiceLocator() async {
   sl.registerLazySingleton<CategoriesApiService>(
         () => CategoriesApiService(sl<Dio>(), baseUrl: ApiConstants.baseUrl),
   );
+  sl.registerLazySingleton<BaseApiService>(
+        () => BaseApiService(sl<Dio>(), baseUrl: ApiConstants.baseUrl),
+  );
   //repository
   sl.registerLazySingleton<HomeRepository>(() => HomeRepositoryImpl(sl()));
   sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(sl()));
   sl.registerLazySingleton<CategoriesRepository>(() => CategoriesRepositoryImpl(sl()));
+  sl.registerLazySingleton<BaseRepository>(() => BaseRepositoryImpl(sl()));
   //use cases
   sl.registerLazySingleton<GetBrandsUseCase>(() => GetBrandsUseCase(sl()));
   sl.registerLazySingleton<GetProductsUseCase>(() => GetProductsUseCase(sl()));
@@ -47,6 +56,9 @@ Future<void> initServiceLocator() async {
   sl.registerLazySingleton<AddCustomerUseCase>(() => AddCustomerUseCase(sl()));
   sl.registerLazySingleton<GetCategoriesUseCase>(() => GetCategoriesUseCase(sl()));
   sl.registerLazySingleton<GetCategoryProductsUseCase>(() => GetCategoryProductsUseCase(sl()));
-  sl.registerLazySingleton<CreateDraftOrderUseCase>(() => CreateDraftOrderUseCase(sl()));
   sl.registerLazySingleton<UpdateCustomerNoteUesCase>(() => UpdateCustomerNoteUesCase(sl()));
+  //draft order use case
+  sl.registerLazySingleton<CreateDraftOrderUseCase>(() => CreateDraftOrderUseCase(sl()));
+  sl.registerLazySingleton<GetDraftOrderByIdUseCase>(() => GetDraftOrderByIdUseCase(sl()));
+  sl.registerLazySingleton<UpdateDraftOrderUseCase>(() => UpdateDraftOrderUseCase(sl()));
 }

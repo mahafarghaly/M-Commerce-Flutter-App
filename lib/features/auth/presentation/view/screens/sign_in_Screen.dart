@@ -12,6 +12,7 @@ import '../../../../../core/networking/api_result.dart';
 import '../../../../base/helpers/base_view.dart';
 import '../../../../base/helpers/secure_storge_helper.dart';
 import '../../../../base/presentation/view/widgets/default_Button.dart';
+import '../../../domain/entities/customer.dart';
 import '../../controller/auth_controller.dart';
 import '../widgets/default_text_field.dart';
 
@@ -24,8 +25,9 @@ class SignInScreen extends ConsumerWidget with BaseView {
   Widget build(BuildContext context, WidgetRef ref) {
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
+    final authController=ref.read(authControllerProvider.notifier);
     return Scaffold(
-      appBar: AppBar(title: const Text("Sing in")),
+      appBar: AppBar(title: const Text("Sign in")),
       body: SafeArea(
         child: Form(
           key: _formKey,
@@ -85,11 +87,7 @@ class SignInScreen extends ConsumerWidget with BaseView {
                   onTap: () async {
                     final email = emailController.text;
                     final password = passwordController.text;
-                    final semail = await SecureStorageHelper.getEmail();
-                    final spassword = await SecureStorageHelper.getPassword();
-                    final favoriteId= await SecureStorageHelper.getDraftOrderId(key: Constants.favDraftOrderId);
-                    final cartId= await SecureStorageHelper.getDraftOrderId(key: Constants.cartDraftOrderId);
-                    print("user data: $semail :: $spassword favorite::$favoriteId cart::$cartId");
+                      printUserDataForTest();
                     if (_formKey.currentState!.validate()) {
                       final result =
                           await ref
@@ -98,18 +96,16 @@ class SignInScreen extends ConsumerWidget with BaseView {
 
                       switch (result) {
                         case Success(:final data):
-                          final isValid = data.any(
-                            (customer) =>
-                                customer.email == email &&
-                                customer.password == password,
-                          );
+                          final matchedCustomer = data
+                              .where((customer) =>
+                          customer.email == email &&
+                              customer.password == password)
+                              .cast<Customer?>()
+                              .firstOrNull;
 
-                          if (isValid) {
-                            await SecureStorageHelper.saveCredentials(
-                              email: email,
-                              password: password,
-                            );
 
+                          if (matchedCustomer != null) {
+                            authController.saveUserData(email: email, password: password, matchedCustomer: matchedCustomer);
                             AppNavigation.navigationTo(context, const App());
                           } else {
                             showToastMessage(
@@ -132,4 +128,11 @@ class SignInScreen extends ConsumerWidget with BaseView {
       ),
     );
   }
+void printUserDataForTest()async{
+  final email = await SecureStorageHelper.getEmail();
+  final password = await SecureStorageHelper.getPassword();
+  final favoriteId= await SecureStorageHelper.getDraftOrderId(key: Constants.favDraftOrderId);
+  final cartId= await SecureStorageHelper.getDraftOrderId(key: Constants.cartDraftOrderId);
+  print("user data: $email :: $password favorite::$favoriteId cart::$cartId");
+}
 }

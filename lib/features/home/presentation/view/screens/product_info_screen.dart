@@ -1,33 +1,90 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store_app/core/extenstions/context_extenstion.dart';
 import 'package:store_app/core/extenstions/widget_extenstion.dart';
+import 'package:store_app/core/utils/constants.dart';
+import 'package:store_app/features/base/helpers/base_view.dart';
+import 'package:store_app/features/base/helpers/secure_storge_helper.dart';
 import 'package:store_app/features/base/presentation/view/widgets/default_Button.dart';
+import 'package:store_app/features/favorites/presentation/controller/favorite_controller.dart';
 import 'package:store_app/features/home/presentation/view/widgets/custom_cursor_Image.dart';
 import 'package:store_app/features/home/presentation/view/widgets/product_colors_list.dart';
 import 'package:store_app/features/home/presentation/view/widgets/product_size_list.dart';
+import '../../../../../core/networking/api_result.dart';
 import '../../../domain/entity/product.dart';
 
-class ProductInfoScreen extends StatelessWidget {
+class ProductInfoScreen extends ConsumerStatefulWidget {
   const ProductInfoScreen({super.key, required this.product});
 
   final ProductEntity product;
 
   @override
+  ConsumerState<ProductInfoScreen> createState() => _ProductInfoScreenState();
+}
+
+class _ProductInfoScreenState extends ConsumerState<ProductInfoScreen>
+    with BaseView {
+  bool isInFavorite = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFavoriteDraftOrder();
+  }
+
+  Future<void> _loadFavoriteDraftOrder() async {
+    final favoriteDraftOrderId = await SecureStorageHelper.getDraftOrderId(
+      key: Constants.favDraftOrderId,
+    );
+    if (favoriteDraftOrderId != null) {
+      final result = await ref
+          .read(favoriteControllerProvider.notifier)
+          .getFavDraftOrderById(draftOrderId: int.parse(favoriteDraftOrderId));
+      switch (result) {
+        case Success(:final data):
+          final exists = data.lineItems.any(
+            (item) => item.productId == widget.product.id,
+          );
+          if (exists) {
+            setState(() {
+              isInFavorite = true;
+            });
+          }
+          break;
+        case Failure(:final message):
+          debugPrint("Error fetching draft order: $message");
+          showToastMessage(message: message, context: context);
+          break;
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final sizeOption = product.options.firstWhere((opt) => opt.name == "Size");
-    final colorOption = product.options.firstWhere(
+    final sizeOption = widget.product.options.firstWhere(
+      (opt) => opt.name == "Size",
+    );
+    final colorOption = widget.product.options.firstWhere(
       (opt) => opt.name == "Color",
     );
 
     final showInRow =
         sizeOption.values.length <= 4 && colorOption.values.length <= 4;
+
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Product Details"),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.favorite_outline)),
+          IconButton(
+            onPressed: _handleFavoriteToggle,
+            icon: Icon(
+              isInFavorite ? Icons.favorite_rounded : Icons.favorite_outline,
+              color: isInFavorite ? Colors.red : Colors.grey,
+            ),
+          ),
         ],
       ),
       body: Column(
@@ -37,14 +94,14 @@ class ProductInfoScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CustomCursorImage(images: product.images),
+                  CustomCursorImage(images: widget.product.images),
                   Padding(
                     padding: EdgeInsets.all(20.0.r),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          product.title.split("|").last.trim(),
+                          widget.product.title.split("|").last.trim(),
                           style: context.textTheme.titleSmall?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -53,7 +110,7 @@ class ProductInfoScreen extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                            "${product.variants?[0].price} EG",
+                              "${widget.product.variants?[0].price} EG",
                               style: context.textTheme.titleSmall?.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -86,14 +143,14 @@ class ProductInfoScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Expanded(
-                                  flex:2,
+                                  flex: 2,
                                   child: ProductSizeList(
-                                    options: product.options,
+                                    options: widget.product.options,
                                   ),
                                 ),
                                 Expanded(
                                   child: ProductColorsList(
-                                    options: product.options,
+                                    options: widget.product.options,
                                   ),
                                 ),
                               ],
@@ -101,9 +158,13 @@ class ProductInfoScreen extends StatelessWidget {
                             : Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                ProductSizeList(options: product.options),
+                                ProductSizeList(
+                                  options: widget.product.options,
+                                ),
                                 SizedBox(height: 10.h),
-                                ProductColorsList(options: product.options),
+                                ProductColorsList(
+                                  options: widget.product.options,
+                                ),
                               ],
                             ),
                         Text(
@@ -115,7 +176,7 @@ class ProductInfoScreen extends StatelessWidget {
                           ),
                         ).paddingTop(10.h),
                         Text(
-                          product.description,
+                          widget.product.description,
                           style: context.textTheme.bodyLarge?.copyWith(
                             fontSize: 16.sp,
                           ),
@@ -136,9 +197,56 @@ class ProductInfoScreen extends StatelessWidget {
             ),
             child: DefaultButton(text: "Check Out", onTap: () {}),
           ),
-
         ],
       ),
     );
   }
+
+  Future<void> _handleFavoriteToggle() async {
+    final favController = ref.read(favoriteControllerProvider.notifier);
+    final favoriteDraftOrderId = await favController.getFavoriteDraftOrderId();
+    if (favoriteDraftOrderId == null) return;
+    final result = await favController.getFavDraftOrderById(
+      draftOrderId: int.parse(favoriteDraftOrderId),
+    );
+
+    switch (result) {
+      case Success(:final data):
+        final exists = favController.isProductInFavorites(data, widget.product);
+        if (!exists) {
+          await favController.addProductToFavorites(
+            draftOrder: data,
+            favoriteDraftOrderId: favoriteDraftOrderId,
+            product: widget.product,
+            showToast: () {
+              showToastMessage(message: "Added To Favorite", context: context);
+            },
+            updateFavButtonColor: () {
+              setState(() => isInFavorite = true);
+            },
+          );
+        } else {
+          await favController.removeProductFromFavorites(
+            draftOrder: data,
+            favoriteDraftOrderId: favoriteDraftOrderId,
+            product: widget.product,
+            showToast: () {
+              showToastMessage(
+                message: "Removed from Favorite",
+                context: context,
+              );
+            }, updateFavButtonColor: () {
+            setState(() => isInFavorite = false);
+          },
+          );
+        }
+        break;
+
+      case Failure(:final message):
+        debugPrint("Error fetching draft order: $message");
+        showToastMessage(message: message, context: context);
+        break;
+    }
+  }
+
 }
