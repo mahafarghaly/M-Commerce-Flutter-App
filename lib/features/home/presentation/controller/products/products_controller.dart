@@ -9,6 +9,7 @@ class ProductsController extends _$ProductsController{
   @override
   Future<ApiResult<List<ProductEntity>>> build({String? vendor}) async {
     final useCase= sl<GetProductsUseCase>();
-    return await useCase.call(vendor: vendor);
+    final result=await useCase.call(vendor: vendor);
+    return  result;
   }
 }

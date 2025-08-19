@@ -19,7 +19,7 @@ class FavoriteController extends _$FavoriteController {
   final updateUseCase = sl<UpdateDraftOrderUseCase>();
 
   @override
-  Future<ApiResult<DraftOrderEntity>?> build()async {
+  Future<ApiResult<DraftOrderEntity>> build()async {
     final draftOrderId= await  SecureStorageHelper.getDraftOrderId(key: Constants.favDraftOrderId);
     return getFavDraftOrderById(draftOrderId:int.parse(draftOrderId??"") ) ;
   }
@@ -65,8 +65,9 @@ class FavoriteController extends _$FavoriteController {
     }
   }
 
-  Future<String?> getFavoriteDraftOrderId()async {
-    return await SecureStorageHelper.getDraftOrderId(key: Constants.favDraftOrderId);
+ Future<String?> getFavoriteDraftOrderId()async {
+     final result =await SecureStorageHelper.getDraftOrderId(key: Constants.favDraftOrderId);
+     return result;
   }
 
   bool isProductInFavorites(
@@ -77,11 +78,11 @@ class FavoriteController extends _$FavoriteController {
   }
 
   Future<void> addProductToFavorites({
-    required DraftOrderEntity draftOrder,
+    required List<LineItemEntity> lineItemList,
     required String favoriteDraftOrderId,
     required ProductEntity product,
-    required VoidCallback showToast,
-    required VoidCallback updateFavButtonColor,
+     VoidCallback? showToast,
+     VoidCallback? updateFavButtonColor,
   }) async {
     final favController = ref.read(favoriteControllerProvider.notifier);
 
@@ -94,7 +95,7 @@ class FavoriteController extends _$FavoriteController {
     final selectedColor =
         colorOption.values[ref.read(selectedColorIndexProvider)];
 
-    final updatedLineItems = List.of(draftOrder.lineItems)..add(
+    final updatedLineItems = List.of(lineItemList)..add(
       LineItemEntity(
         productId: product.id,
         variantId: product.variants?.first.id,
@@ -111,30 +112,31 @@ class FavoriteController extends _$FavoriteController {
       draftOrderId: int.parse(favoriteDraftOrderId),
       lineItems: updatedLineItems,
     );
-    updateFavButtonColor();
-    showToast();
+    state = AsyncValue.data(await getFavDraftOrderById(draftOrderId: int.parse(favoriteDraftOrderId)));
+    if(updateFavButtonColor!=null)updateFavButtonColor();
+    if(showToast!=null)showToast();
   }
 
   Future<void> removeProductFromFavorites({
-    required DraftOrderEntity draftOrder,
+    required List<LineItemEntity> lineItemList,
     required String favoriteDraftOrderId,
     required ProductEntity product,
-    required VoidCallback showToast,
-    required VoidCallback updateFavButtonColor,
+     VoidCallback? showToast,
+     VoidCallback? updateFavButtonColor,
   }) async {
     final favController = ref.read(favoriteControllerProvider.notifier);
-
-    final updatedLineItems = List.of(draftOrder.lineItems)..removeWhere(
-      (item) =>
-          item.productId == product.id &&
+    final updatedLineItems = List.of(lineItemList)..removeWhere(
+          (item) =>
+      item.productId == product.id &&
           item.variantId == product.variants?.first.id,
     );
 
-    await favController.updateFavoriteLineItems(
+    final updatedDraftOrder=await favController.updateFavoriteLineItems(
       draftOrderId: int.parse(favoriteDraftOrderId),
       lineItems: updatedLineItems,
     );
-    updateFavButtonColor();
-    showToast();
+    state = AsyncValue.data(updatedDraftOrder);
+    if(updateFavButtonColor!=null)updateFavButtonColor();
+    if(showToast!=null)showToast();
   }
 }

@@ -16,7 +16,7 @@ import '../../../../../core/networking/api_result.dart';
 import '../../../domain/entity/product.dart';
 
 class ProductInfoScreen extends ConsumerStatefulWidget {
-  const ProductInfoScreen({super.key, required this.product});
+  const ProductInfoScreen({super.key,  required this.product});
 
   final ProductEntity product;
 
@@ -215,7 +215,7 @@ class _ProductInfoScreenState extends ConsumerState<ProductInfoScreen>
         final exists = favController.isProductInFavorites(data, widget.product);
         if (!exists) {
           await favController.addProductToFavorites(
-            draftOrder: data,
+            lineItemList: data.lineItems,
             favoriteDraftOrderId: favoriteDraftOrderId,
             product: widget.product,
             showToast: () {
@@ -227,7 +227,7 @@ class _ProductInfoScreenState extends ConsumerState<ProductInfoScreen>
           );
         } else {
           await favController.removeProductFromFavorites(
-            draftOrder: data,
+            lineItemList: data.lineItems,
             favoriteDraftOrderId: favoriteDraftOrderId,
             product: widget.product,
             showToast: () {

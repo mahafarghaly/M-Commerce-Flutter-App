@@ -8,13 +8,13 @@ class FavoriteList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final productsAsync= ref.watch(favoriteControllerProvider);;
+    final productsAsync= ref.watch(favoriteControllerProvider);
     return productsAsync.when(
       data: (result) {
         switch (result) {
           case Success(:final data):
             if (data.lineItems.length<=1) {
-              return const Center(child: Text("No brands found."));
+              return const Center(child: Text("No Favorite items found."));
             }
             return Padding(
               padding: const EdgeInsets.all(16.0),
@@ -27,7 +27,7 @@ class FavoriteList extends ConsumerWidget {
                   childAspectRatio: 3 / 4,
                 ),
                 itemBuilder: (context, index) {
-                  return FavoriteItem(lineItemEntity: data.lineItems[index+1]);
+                  return FavoriteItem(lineItemEntity: data.lineItems[index+1], draftOrderEntity: data,);
                 },
               ),
             );
