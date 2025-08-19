@@ -1,22 +1,45 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store_app/core/extenstions/context_extenstion.dart';
+import 'package:store_app/core/networking/api_result.dart';
 import 'package:store_app/core/utils/app_assets.dart';
 import 'package:store_app/core/utils/app_navigation.dart';
+import 'package:store_app/features/base/domain/entity/draft_order_entity.dart';
+import 'package:store_app/features/base/helpers/base_view.dart';
 import 'package:store_app/features/home/domain/entity/product.dart';
 import 'package:store_app/features/home/presentation/view/screens/product_info_screen.dart';
 
-class ProductItem extends StatelessWidget {
+import '../../../../../core/utils/constants.dart';
+import '../../../../base/helpers/secure_storge_helper.dart';
+import '../../../../favorites/presentation/controller/favorite_controller.dart';
+
+class ProductItem extends ConsumerWidget with BaseView {
   const ProductItem({super.key, required this.product});
 
   final ProductEntity product;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final favState = ref.watch(favoriteControllerProvider);
+    final isInFavorite = favState.maybeWhen(
+      data: (result) {
+        if (result is Success<DraftOrderEntity>) {
+          return ref
+              .watch(favoriteControllerProvider.notifier)
+              .isProductInFavorites(result.data, product);
+        }
+        return false;
+      },
+      orElse: () => false,
+    );
     return InkWell(
-      onTap: (){
-        AppNavigation.navigationTo(context, ProductInfoScreen(product: product,));
+      onTap: () {
+        AppNavigation.navigationTo(
+          context,
+          ProductInfoScreen(product: product),
+        );
       },
       child: Container(
         width: 200.w,
@@ -62,7 +85,7 @@ class ProductItem extends StatelessWidget {
                 product.title.split('|').last.trim(),
                 style: context.textTheme.titleSmall?.copyWith(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16.sp
+                  fontSize: 16.sp,
                 ),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
@@ -90,8 +113,53 @@ class ProductItem extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.favorite_outline, size: 28.sp),
+                    onPressed: () async {
+                      final favController = ref.read(
+                        favoriteControllerProvider.notifier,
+                      );
+                      final favId =
+                          await favController.getFavoriteDraftOrderId();
+                      final favDraftOrder = await favController
+                          .getFavDraftOrderById(
+                            draftOrderId: int.parse(favId ?? ""),
+                          );
+
+                      if (favDraftOrder is Success<DraftOrderEntity>) {
+                        final draftOrder = favDraftOrder.data;
+                        if (isInFavorite) {
+                          await favController.removeProductFromFavorites(
+                            lineItemList: draftOrder.lineItems,
+                            favoriteDraftOrderId: favId ?? "",
+                            product: product,
+                            showToast: () {
+                              showToastMessage(
+                                message: "Removed from Favorite",
+                                context: context,
+                              );
+                            },
+                          );
+                        } else {
+                          await favController.addProductToFavorites(
+                            lineItemList: draftOrder.lineItems,
+                            favoriteDraftOrderId: favId ?? "",
+                            product: product,
+                            showToast: () {
+                              showToastMessage(
+                                message: "Added to Favorite",
+                                context: context,
+                              );
+                            },
+                          );
+                        }
+                      }
+                    },
+                    icon: Icon(
+                      isInFavorite
+                          ? Icons.favorite_rounded
+                          : Icons.favorite_outline,
+                      color: isInFavorite ? Colors.red : Colors.grey,
+                      size: 28.sp,
+                    ),
                   ),
                 ],
               ),

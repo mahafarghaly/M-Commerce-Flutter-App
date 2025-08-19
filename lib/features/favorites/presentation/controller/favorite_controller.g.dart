@@ -7,13 +7,13 @@ part of 'favorite_controller.dart';
 // **************************************************************************
 
 String _$favoriteControllerHash() =>
-    r'fe48863bddcd3add3317d717ab7c7b4382d266a5';
+    r'ef2ba0b175c998c509480905854e89f686c2307c';
 
 /// See also [FavoriteController].
 @ProviderFor(FavoriteController)
 final favoriteControllerProvider = AutoDisposeAsyncNotifierProvider<
   FavoriteController,
-  ApiResult<DraftOrderEntity>?
+  ApiResult<DraftOrderEntity>
 >.internal(
   FavoriteController.new,
   name: r'favoriteControllerProvider',
@@ -26,6 +26,6 @@ final favoriteControllerProvider = AutoDisposeAsyncNotifierProvider<
 );
 
 typedef _$FavoriteController =
-    AutoDisposeAsyncNotifier<ApiResult<DraftOrderEntity>?>;
+    AutoDisposeAsyncNotifier<ApiResult<DraftOrderEntity>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
