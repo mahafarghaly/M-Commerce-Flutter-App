@@ -5,7 +5,7 @@ import 'package:store_app/core/extenstions/context_extenstion.dart';
 class DefaultButton extends StatelessWidget {
   const DefaultButton({super.key, required this.text, required this.onTap, this.width, this.height});
 final String text;
-final VoidCallback onTap;
+final VoidCallback? onTap;
 final double? width;
 final double? height;
   @override
@@ -13,6 +13,7 @@ final double? height;
     return MaterialButton(
       minWidth:width?? double.infinity,
       height: height??35.h,
+      disabledColor: Colors.grey,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.r),
       ),

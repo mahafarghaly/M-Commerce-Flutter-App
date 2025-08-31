@@ -36,8 +36,9 @@ class Variants {
   final int? productId;
   final String? title;
   final String? price;
-
-  const Variants({this.id, this.productId, this.title, this.price});
+  @JsonKey(name: "inventory_quantity")
+final int? inventoryQuantity;
+  const Variants({this.id, this.productId, this.title, this.price,this.inventoryQuantity});
 
   factory Variants.fromJson(Map<String, dynamic> json) =>
       _$VariantsFromJson(json);

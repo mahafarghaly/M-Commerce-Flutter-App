@@ -25,12 +25,15 @@ class VariantEntity {
   final int productId;
   final String title;
   final String price;
+  final int inventoryQuantity;
 
   VariantEntity({
     required this.id,
     required this.productId,
     required this.title,
     required this.price,
+    required this.inventoryQuantity,
+
   });
 }
 

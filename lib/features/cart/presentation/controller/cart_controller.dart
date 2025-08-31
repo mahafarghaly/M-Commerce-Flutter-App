@@ -1,30 +1,32 @@
 import 'dart:ui';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:store_app/features/base/domain/entity/draft_order_entity.dart';
-import 'package:store_app/features/base/domain/usecases/get_draft_order_by_id_usecase.dart';
-import 'package:store_app/features/base/domain/usecases/update_draft_order_usecase.dart';
+
 import '../../../../core/di/injection_container.dart';
 import '../../../../core/di/service_locator.dart';
 import '../../../../core/networking/api_error_handler.dart';
 import '../../../../core/networking/api_result.dart';
 import '../../../../core/utils/constants.dart';
+import '../../../base/domain/entity/draft_order_entity.dart';
+import '../../../base/domain/usecases/get_draft_order_by_id_usecase.dart';
+import '../../../base/domain/usecases/update_draft_order_usecase.dart';
 import '../../../base/helpers/secure_storge_helper.dart';
 import '../../../home/domain/entity/product.dart';
 
-part 'favorite_controller.g.dart';
+part 'cart_controller.g.dart';
 
 @riverpod
-class FavoriteController extends _$FavoriteController {
+class CartController extends _$CartController {
   final getUseCase = sl<GetDraftOrderByIdUseCase>();
   final updateUseCase = sl<UpdateDraftOrderUseCase>();
 
   @override
   Future<ApiResult<DraftOrderEntity>> build() async {
-    final draftOrderId = await getFavoriteDraftOrderId();
-    return getFavDraftOrderById(draftOrderId: int.parse(draftOrderId ?? ""));
+    final draftOrderId = await getCartDraftOrderId();
+    return getCartDraftOrderById(draftOrderId: int.parse(draftOrderId ?? ""));
   }
 
-  Future<ApiResult<DraftOrderEntity>> getFavDraftOrderById({
+  Future<ApiResult<DraftOrderEntity>> getCartDraftOrderById({
     required int draftOrderId,
   }) async {
     try {
@@ -35,7 +37,7 @@ class FavoriteController extends _$FavoriteController {
     }
   }
 
-  Future<ApiResult<DraftOrderEntity>> updateFavoriteLineItems({
+  Future<ApiResult<DraftOrderEntity>> updateCartLineItems({
     required int draftOrderId,
     required List<LineItemEntity> lineItems,
   }) async {
@@ -65,34 +67,30 @@ class FavoriteController extends _$FavoriteController {
     }
   }
 
-  Future<String?> getFavoriteDraftOrderId() async {
+  Future<String?> getCartDraftOrderId() async {
     final result = await SecureStorageHelper.getDraftOrderId(
-      key: Constants.favDraftOrderId,
+      key: Constants.cartDraftOrderId,
     );
     return result;
   }
 
-  bool isProductInFavorites(
-    DraftOrderEntity draftOrder,
-    ProductEntity product,
-  ) {
-    return draftOrder.lineItems.any((item) => item.productId == product.id);
+  bool isProductInCart(DraftOrderEntity draftOrder, ProductEntity product) {
+    //&&item.productId==product.id
+    return draftOrder.lineItems.any((item) =>item.variantId ==product.variants?[ref.watch(selectedSizeIndexProvider)].id);
   }
 
-  Future<void> addProductToFavorites({
+  Future<void> addProductToCart({
     required List<LineItemEntity> lineItemList,
-    required String favoriteDraftOrderId,
+    required String cartDraftOrderId,
     required ProductEntity product,
     VoidCallback? showToast,
-    VoidCallback? updateFavButtonColor,
   }) async {
-    final favController = ref.read(favoriteControllerProvider.notifier);
+    final favController = ref.read(cartControllerProvider.notifier);
 
     final sizeOption = product.options.firstWhere((opt) => opt.name == "Size");
     final colorOption = product.options.firstWhere(
       (opt) => opt.name == "Color",
     );
-
     final selectedSize = sizeOption.values[ref.read(selectedSizeIndexProvider)];
     final selectedColor =
         colorOption.values[ref.read(selectedColorIndexProvider)];
@@ -100,7 +98,7 @@ class FavoriteController extends _$FavoriteController {
     final updatedLineItems = List.of(lineItemList)..add(
       LineItemEntity(
         productId: product.id,
-        variantId: product.variants?.first.id,
+        variantId: product.variants?[ref.read(selectedSizeIndexProvider)].id,
         quantity: 1,
         properties: [
           PropertyEntity(name: "Size", value: selectedSize),
@@ -110,47 +108,45 @@ class FavoriteController extends _$FavoriteController {
       ),
     );
 
-    await favController.updateFavoriteLineItems(
-      draftOrderId: int.parse(favoriteDraftOrderId),
+    await favController.updateCartLineItems(
+      draftOrderId: int.parse(cartDraftOrderId),
       lineItems: updatedLineItems,
     );
-    state = AsyncValue.data(
-      await getFavDraftOrderById(draftOrderId: int.parse(favoriteDraftOrderId)),
-    );
-    if (updateFavButtonColor != null) updateFavButtonColor();
+     state = AsyncValue.data(await getCartDraftOrderById(draftOrderId: int.parse(cartDraftOrderId)));
     if (showToast != null) showToast();
   }
 
-  Future<void> removeProductFromFavorites({
+  Future<void> removeProductFromCart({
     required List<LineItemEntity> lineItemList,
-    required String favoriteDraftOrderId,
+    required String cartDraftOrderId,
     required ProductEntity product,
     VoidCallback? showToast,
-    VoidCallback? updateFavButtonColor,
   }) async {
-    final favController = ref.read(favoriteControllerProvider.notifier);
+    final favController = ref.read(cartControllerProvider.notifier);
     final updatedLineItems = List.of(lineItemList)..removeWhere(
       (item) =>
-          item.productId == product.id &&
-          item.variantId == product.variants?.first.id,
+          item.productId == product.id
+              &&
+           item.variantId == product.variants?[ref.watch(selectedSizeIndexProvider)].id
     );
 
-    final updatedDraftOrder = await favController.updateFavoriteLineItems(
-      draftOrderId: int.parse(favoriteDraftOrderId),
+    final updatedDraftOrder = await favController.updateCartLineItems(
+      draftOrderId: int.parse(cartDraftOrderId),
       lineItems: updatedLineItems,
     );
     state = AsyncValue.data(updatedDraftOrder);
-    if (updateFavButtonColor != null) updateFavButtonColor();
     if (showToast != null) showToast();
   }
-  Future<bool> loadFavoriteDraftOrder(ProductEntity product) async {
-    final favoriteDraftOrderId = await getFavoriteDraftOrderId();
-    if (favoriteDraftOrderId != null) {
-      final result = await getFavDraftOrderById(draftOrderId: int.parse(favoriteDraftOrderId));
+  Future<bool> checkIfVariantInCart({
+    required ProductEntity product,
+  }) async {
+    final cartDraftOrderId = await getCartDraftOrderId();
 
-      if (result is Success<DraftOrderEntity>){
-        final exists = isProductInFavorites(result.data,product);
-        return exists;
+    if (cartDraftOrderId != null) {
+      final result = await getCartDraftOrderById(draftOrderId: int.parse(cartDraftOrderId));
+
+      if (result is Success<DraftOrderEntity>) {
+        return isProductInCart(result.data, product);
       }
     }
     return false;

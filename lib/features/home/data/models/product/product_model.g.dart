@@ -43,6 +43,7 @@ Variants _$VariantsFromJson(Map<String, dynamic> json) => Variants(
   productId: (json['product_id'] as num?)?.toInt(),
   title: json['title'] as String?,
   price: json['price'] as String?,
+  inventoryQuantity: (json['inventory_quantity'] as num?)?.toInt(),
 );
 
 Map<String, dynamic> _$VariantsToJson(Variants instance) => <String, dynamic>{
@@ -50,6 +51,7 @@ Map<String, dynamic> _$VariantsToJson(Variants instance) => <String, dynamic>{
   'product_id': instance.productId,
   'title': instance.title,
   'price': instance.price,
+  'inventory_quantity': instance.inventoryQuantity,
 };
 
 Options _$OptionsFromJson(Map<String, dynamic> json) => Options(

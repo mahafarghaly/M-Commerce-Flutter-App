@@ -1,31 +1,30 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'favorite_controller.dart';
+part of 'cart_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$favoriteControllerHash() =>
-    r'2f324b37c75773a7acfbf4e5857ad6295d33de13';
+String _$cartControllerHash() => r'32910af7bcfcc8b7566ead9de786f1d5f773382d';
 
-/// See also [FavoriteController].
-@ProviderFor(FavoriteController)
-final favoriteControllerProvider = AutoDisposeAsyncNotifierProvider<
-  FavoriteController,
+/// See also [CartController].
+@ProviderFor(CartController)
+final cartControllerProvider = AutoDisposeAsyncNotifierProvider<
+  CartController,
   ApiResult<DraftOrderEntity>
 >.internal(
-  FavoriteController.new,
-  name: r'favoriteControllerProvider',
+  CartController.new,
+  name: r'cartControllerProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product')
           ? null
-          : _$favoriteControllerHash,
+          : _$cartControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$FavoriteController =
+typedef _$CartController =
     AutoDisposeAsyncNotifier<ApiResult<DraftOrderEntity>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

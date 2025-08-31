@@ -23,6 +23,7 @@ extension VariantMapper on Variants {
       productId: productId ?? 0,
       title: title ?? '',
       price: price ?? '',
+      inventoryQuantity:inventoryQuantity??0
     );
   }
 }
