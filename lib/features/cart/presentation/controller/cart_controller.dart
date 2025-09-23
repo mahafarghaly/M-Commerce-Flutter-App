@@ -120,17 +120,18 @@ class CartController extends _$CartController {
     required List<LineItemEntity> lineItemList,
     required String cartDraftOrderId,
     required ProductEntity product,
+    required int  variantId,
     VoidCallback? showToast,
   }) async {
-    final favController = ref.read(cartControllerProvider.notifier);
+    final cartController = ref.read(cartControllerProvider.notifier);
     final updatedLineItems = List.of(lineItemList)..removeWhere(
       (item) =>
-          item.productId == product.id
-              &&
-           item.variantId == product.variants?[ref.watch(selectedSizeIndexProvider)].id
+          item.productId == product.id &&
+         item.variantId == variantId,
+             //product.variants?[ref.watch(selectedSizeIndexProvider)].id
     );
 
-    final updatedDraftOrder = await favController.updateCartLineItems(
+    final updatedDraftOrder = await cartController.updateCartLineItems(
       draftOrderId: int.parse(cartDraftOrderId),
       lineItems: updatedLineItems,
     );
@@ -151,4 +152,17 @@ class CartController extends _$CartController {
     }
     return false;
   }
+  double calculateTotalPrice(DraftOrderEntity draftOrder) {
+    double total = 0.0;
+
+    for (final item in draftOrder.lineItems.skip(1)) {
+      final price = double.tryParse(item.price ?? "0") ?? 0.0;
+      total += price * (item.quantity ?? 1);
+    }
+
+    return total;
+  }
+String? getCurrency(DraftOrderEntity draftOrder){
+return draftOrder.currency;
+}
 }

@@ -15,7 +15,7 @@ class CategoryProductsController extends _$CategoryProductsController {
     try {
       final result = await useCase.getCategoryProducts(id);
       if (result case Success(:final data)) {
-        final fullProductResult = await productUseCase.call();
+        final fullProductResult = await productUseCase.getProductsByVendor();
         final categoryProductIds = data.map((e) => e.id).toSet();
         if (fullProductResult case Success(data: final allProducts)) {
           final filtered =

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store_app/core/utils/app_navigation.dart';
+import 'package:store_app/features/cart/presentation/view/screens/cart_screen.dart';
 import 'package:store_app/features/favorites/presentation/view/screens/favorite_screen.dart';
 import 'package:store_app/features/home/presentation/view/widgets/banner_display.dart';
 import 'package:store_app/features/home/presentation/view/widgets/brands_list.dart';
@@ -18,7 +19,9 @@ class HomeScreen extends StatelessWidget {
               title: "Shopify",
               actions: [
                 IconButton(icon: const Icon(Icons.search), onPressed: () {}),
-                IconButton(icon: const Icon(Icons.shopping_cart_outlined), onPressed: () {}),
+                IconButton(icon: const Icon(Icons.shopping_cart_outlined), onPressed: () {
+                  AppNavigation.navigationTo(context,const CartScreen() );
+                }),
                 IconButton(icon: const Icon(Icons.favorite_outline), onPressed: () {
                   AppNavigation.navigationTo(context, const FavoriteScreen());
                 }),

@@ -43,7 +43,7 @@ class _ProductInfoScreenState extends ConsumerState<ProductInfoScreen>
     });
     _sizeListener = ref.listenManual<int>(
       selectedSizeIndexProvider,
-          (_,_) async{
+          (_,_){
             _initCartStatus();
       },
     );
@@ -53,6 +53,23 @@ class _ProductInfoScreenState extends ConsumerState<ProductInfoScreen>
   void dispose() {
     _sizeListener.close();
     super.dispose();
+  }
+  Future<void> _initCartStatus() async {
+    final exists = await _cartController
+        .checkIfVariantInCart(
+      product: widget.product,
+    );
+    if (mounted) {
+      setState(() => isInCart = exists);
+    }
+  }
+  Future<void> _loadFavoriteDraftOrder() async {
+    final exists= await _favoriteController.loadFavoriteDraftOrder(widget.product);
+    if ( exists) {
+      setState(() {
+        isInFavorite = true;
+      });
+    }
   }
   @override
   Widget build(BuildContext context) {
@@ -198,38 +215,18 @@ class _ProductInfoScreenState extends ConsumerState<ProductInfoScreen>
       ),
     );
   }
-
-  Future<void> _initCartStatus() async {
-    final exists = await ref.read(cartControllerProvider.notifier)
-        .checkIfVariantInCart(
-      product: widget.product,
-    );
-    if (mounted) {
-      setState(() => isInCart = exists);
-    }
-  }
-
-  Future<void> _loadFavoriteDraftOrder() async {
-    final exists= await ref.read(favoriteControllerProvider.notifier).loadFavoriteDraftOrder(widget.product);
-    if ( exists) {
-      setState(() {
-        isInFavorite = true;
-      });
-    }
-  }
   Future<void> _handleFavoriteToggle() async {
-    final favController = ref.read(favoriteControllerProvider.notifier);
-    final favoriteDraftOrderId = await favController.getFavoriteDraftOrderId();
+    final favoriteDraftOrderId = await _favoriteController.getFavoriteDraftOrderId();
     if (favoriteDraftOrderId == null) return;
-    final result = await favController.getFavDraftOrderById(
+    final result = await _favoriteController.getFavDraftOrderById(
       draftOrderId: int.parse(favoriteDraftOrderId),
     );
 
     switch (result) {
       case Success(:final data):
-        final exists = favController.isProductInFavorites(data, widget.product);
+        final exists = _favoriteController.isProductInFavorites(data, widget.product);
         if (!exists) {
-          await favController.addProductToFavorites(
+          await _favoriteController.addProductToFavorites(
             lineItemList: data.lineItems,
             favoriteDraftOrderId: favoriteDraftOrderId,
             product: widget.product,
@@ -241,7 +238,7 @@ class _ProductInfoScreenState extends ConsumerState<ProductInfoScreen>
             },
           );
         } else {
-          await favController.removeProductFromFavorites(
+          await _favoriteController.removeProductFromFavorites(
             lineItemList: data.lineItems,
             favoriteDraftOrderId: favoriteDraftOrderId,
             product: widget.product,
@@ -264,20 +261,19 @@ class _ProductInfoScreenState extends ConsumerState<ProductInfoScreen>
     }
   }
   Future<void> _handleAddToCartToggle() async {
-    final cartController = ref.read(cartControllerProvider.notifier);
-    final cartDraftOrderId = await cartController.getCartDraftOrderId();
+    final cartDraftOrderId = await _cartController.getCartDraftOrderId();
     if (cartDraftOrderId == null) return;
 
     final result =
-    await cartController.getCartDraftOrderById(draftOrderId: int.parse(cartDraftOrderId));
+    await _cartController.getCartDraftOrderById(draftOrderId: int.parse(cartDraftOrderId));
 
     switch (result) {
       case Success(:final data):
-        final exists = cartController.isProductInCart(data, widget.product);
+        final exists = _cartController.isProductInCart(data, widget.product);
 
         if (!exists) {
           if(( widget.product.variants?[ref.watch(selectedSizeIndexProvider)].inventoryQuantity ?? 0) > 0){
-            await cartController.addProductToCart(
+            await _cartController.addProductToCart(
               lineItemList: data.lineItems,
               cartDraftOrderId: cartDraftOrderId,
               product: widget.product,
@@ -292,13 +288,13 @@ class _ProductInfoScreenState extends ConsumerState<ProductInfoScreen>
           }
 
         } else {
-          await cartController.removeProductFromCart(
+          await _cartController.removeProductFromCart(
             lineItemList: data.lineItems,
             cartDraftOrderId: cartDraftOrderId,
             product: widget.product,
             showToast: () {
               showToastMessage(message: "Removed from Cart", context: context);
-            },
+            }, variantId: widget.product.variants![ref.watch(selectedSizeIndexProvider)].id,
           );
           setState(() => isInCart = false);
         }
@@ -309,5 +305,6 @@ class _ProductInfoScreenState extends ConsumerState<ProductInfoScreen>
         break;
     }
   }
-
+  CartController get _cartController => ref.read(cartControllerProvider.notifier);
+  FavoriteController get _favoriteController => ref.read(favoriteControllerProvider.notifier);
 }
